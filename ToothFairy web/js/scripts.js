@@ -202,40 +202,28 @@
         }
     });
 
+    // send mail from contact
     function rsubmitForm() {
         // initiate variables with form content
 		var name = $("#rname").val();
-		var emailVol = $("#remail").val();
+		var email = $("#remail").val();
 		var phone = $("#rphone").val();
-        var select = $("#rselect").val();   // who am i
-        var terms = $("#rterms").val(); // accept to condition
-        var adress = $("#Address").val();
-        var specialization = $("#specialization").val();
-
-      
-        window.open(
-            "mailto:my.tooth.fairy0@gmail.com?subject=בקשת הצטרפות לעמותה  - " +
-              name +
-              "&body=היי, שמי "+ name + ", אשמח לקחת חלק פעיל בעמותת פיית השיניים. פרטים על עצמי:" +
-              "%0d" +
-              "מייל: " +
-              emailVol +
-              "%0d" +
-              "טלפון: " +
-              phone +
-              "%0d" +
-              "כתובת: " +
-              adress +
-              "%0d" +
-              "התמחות: " +
-              specialization +
-              "%0d" +
-              "מי אני: " +
-              select +
-              
-              "%0d"
-          );
-
+        var select = $("#rselect").val();
+        var terms = $("#rterms").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "php/requestform-process.php",
+            data: "name=" + name + "&email=" + email + "&phone=" + phone + "&select=" + select + "&terms=" + terms, 
+            success: function(text) {
+                if (text == "success") {
+                    rformSuccess();
+                } else {
+                    rformError();
+                    rsubmitMSG(false, text);
+                }
+            }
+        });
 	}
 
     function rformSuccess() {

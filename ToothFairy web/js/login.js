@@ -1,4 +1,3 @@
-// const { default: firebase } = require("./firebase");
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -20,18 +19,6 @@ $(document).ready(function () {
   x.style.display = "none";
 });
 
-//   firebase.auth().onAuthStateChanged(function(user) {
-//     if (user) {
-//     //   alert("user logd in 1")
-//       $('.element').attr('href', "/booking.html");
-//     } else {
-//       alert("user not logd in")
-//     }
-//   });
-
-function send_mail() {
-  window.open("mailto:dvir563@gmail.com?subject=test&body=test");
-}
 
 function login() {
   var userEmail = document.getElementById("lemail").value;
@@ -73,11 +60,6 @@ function login() {
 
       // ...
     });
-}
-
-// logout user
-function logout() {
-  firebase.auth().signOut();
 }
 
 // sent email to change password
