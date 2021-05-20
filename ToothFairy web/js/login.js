@@ -16,85 +16,103 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 $(document).ready(function () {
-
   var x = document.getElementById("forgotpass");
   x.style.display = "none";
-
 });
 
+//   firebase.auth().onAuthStateChanged(function(user) {
+//     if (user) {
+//     //   alert("user logd in 1")
+//       $('.element').attr('href', "/booking.html");
+//     } else {
+//       alert("user not logd in")
+//     }
+//   });
 
+function send_mail() {
+  window.open("mailto:dvir563@gmail.com?subject=test&body=test");
+}
 
+function login() {
+  var userEmail = document.getElementById("lemail").value;
+  var userPass = document.getElementById("lpass").value;
 
-  //   firebase.auth().onAuthStateChanged(function(user) {
-  //     if (user) {
-  //     //   alert("user logd in 1")
-  //       $('.element').attr('href', "/booking.html");
-  //     } else {
-  //       alert("user not logd in")
-  //     }
-  //   });
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(userEmail, userPass)
+    .then(function (firebaseUser) {
+      // alert("user logd in 2")
+      window.location.href = "booking.html";
 
-  function send_mail() {
-    window.open("mailto:dvir563@gmail.com?subject=test&body=test");
-  }
-
-  function login() {
-    var userEmail = document.getElementById("lemail").value;
-    var userPass = document.getElementById("lpass").value;
-
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(userEmail, userPass)
-      .then(function (firebaseUser) {
-        // alert("user logd in 2")
-        window.location.href = "booking.html";
-
-        ffirebase.auth().signup;
-      })
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        window.alert("Error : " + errorMessage);
-
-        // open forgot pass div
-        var x = document.getElementById("forgotpass");
-        x.style.display = "block";
-
-
-        // ...
-      });
-  }
-
-  function logout() {
-    firebase.auth().signOut();
-  }
-
-  function forgotpass() {
-    let email = $("#reset_email").val()
-    let auth = firebase.auth()
-
-    auth.sendPasswordResetEmail(email)
-    .then(function(){
-      alert("Email as been sent")
-      window.location.href = "index.html";
+      ffirebase.auth().signup;
     })
-    .catch(function(error){
-
+    .catch(function (error) {
+      // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       window.alert("Error : " + errorMessage);
-    })
-  }
 
-  function senmail(){
-    alert("func")
-    var mailOptions = {
-      from: 'dvir563@gmail.com>', // sender address
-      to: 'dvir563@gmail.com', // list of receivers
-      subject: 'Email Example', // Subject line
-      text: "test" //, // plaintext body
-      // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
+      // open forgot pass div
+      var x = document.getElementById("forgotpass");
+      x.style.display = "block";
+
+      // ...
+    });
+}
+
+function logout() {
+  firebase.auth().signOut();
+}
+
+function forgotpass() {
+  let email = $("#reset_email").val();
+  let auth = firebase.auth();
+
+  auth
+    .sendPasswordResetEmail(email)
+    .then(function () {
+      alert("Email as been sent");
+      window.location.href = "index.html";
+    })
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      window.alert("Error : " + errorMessage);
+    });
+}
+
+function senmail() {
+  alert("func");
+  var mailOptions = {
+    from: "dvir563@gmail.com>", // sender address
+    to: "dvir563@gmail.com", // list of receivers
+    subject: "Email Example", // Subject line
+    text: "test", //, // plaintext body
+    // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
   };
-    
-  }
+}
+
+// make a contact
+function csubmitForm() {
+  // initiate variables with form content
+  var name = $("#cname").val();
+  var emailUser = $("#cemail").val();
+  var message = $("#cmessage").val();
+  var terms = $("#cterms").val();
+  var toothEmail = "my.tooth.fairy0@gmail.com";
+  //var ander = "מ%0D" + emailUser + message
+
+  // *********** //
+  window.open(
+    "mailto:my.tooth.fairy0@gmail.com?subject=יצירת קשר  - " +
+      name +
+      "&body=מייל לחזרה: " +
+      emailUser +
+      "%0d" +
+      "%0d" +
+      message +
+      "%0d"
+  );
+
+  // *********** //
+}
