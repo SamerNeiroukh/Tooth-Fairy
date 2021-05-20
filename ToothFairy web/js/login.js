@@ -52,21 +52,39 @@ function login() {
       var errorMessage = error.message;
       window.alert("Error : " + errorMessage);
 
-      // open forgot pass div
-      var x = document.getElementById("forgotpass");
-      x.style.display = "block";
+      // check if user exsist. 
+
+      // case is not exsist in the system return
+      if( errorMessage === "There is no user record corresponding to this identifier. The user may have been deleted.")
+      {
+        document.getElementById("lemail").value = ""
+        document.getElementById("lpass").value = ""
+        return;
+      }
+
+      // case exsist open a forgat password div
+      else{
+        document.getElementById("lemail").value = ""
+        document.getElementById("lpass").value = ""
+
+        var x = document.getElementById("forgotpass");
+        x.style.display = "block";
+      }
 
       // ...
     });
 }
 
+// logout user
 function logout() {
   firebase.auth().signOut();
 }
 
+// sent email to change password
 function forgotpass() {
   let email = $("#reset_email").val();
   let auth = firebase.auth();
+  
 
   auth
     .sendPasswordResetEmail(email)
@@ -81,16 +99,6 @@ function forgotpass() {
     });
 }
 
-function senmail() {
-  alert("func");
-  var mailOptions = {
-    from: "dvir563@gmail.com>", // sender address
-    to: "dvir563@gmail.com", // list of receivers
-    subject: "Email Example", // Subject line
-    text: "test", //, // plaintext body
-    // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
-  };
-}
 
 // make a contact
 function csubmitForm() {
