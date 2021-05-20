@@ -188,6 +188,18 @@
                             <div class="form-message">
                                 <div id="rmsgSubmit" class="h3 text-center hidden"></div>
                             </div>
+                            <div class="form-group" id = "forgotpass">
+                                <div class="form-group">
+                                <input type="email" class="form-control-input" id="reset_email" name="reset_email">
+                                <label class="label-control" for="reset_email">הכנס מייל לשינוי סיסמה</label>
+                                <div class="help-block with-errors"></div>
+                                </div>
+                                <button onclick="forgotpass()" class="form-control-submit-button">שחכתי סיסמה</button>
+
+                            </div>
+                            <div class="form-message">
+                                <div id="rmsgSubmit" class="h3 text-center hidden"></div>
+                            </div>
                         </form>
                     </div> <!-- end of form-container -->
                     <!-- end of request form -->
@@ -263,7 +275,7 @@
                             <div class="help-block with-errors"></div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" id=" " class="form-control-submit-button">שלח הודעה</button>
+                            <button type="submit" onclick="senmail()" id="SENDMAIL" class="form-control-submit-button">שלח הודעה</button>
                         </div>
                         <div class="form-message">
                             <div id="cmsgSubmit" class="h3 text-center hidden"></div>
