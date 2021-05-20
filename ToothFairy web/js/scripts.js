@@ -310,58 +310,86 @@
         // handle the invalid form...
         pformError();
         psubmitMSG(false, "Please fill all fields!");
-      } 
+      }
     });
 
   function psubmitForm() {
     // initiate variables with form content
     var name = $("#rname").val();
-    var emailUser = $("#remail").val();
-    let phone = $("#rphone")
-    var address = $("#Address").val();
-    var specialization = $("#respecialization").val();
-    var toothEmail = "my.tooth.fairy0@gmail.com";
-    //var ander = "מ%0D" + emailUser + message
+    var emailVol = $("#remail").val();
+    var phone = $("#rphone").val();
+    var select = $("#rselect").val(); // who am i
+    var terms = $("#rterms").val(); // accept to condition
+    var adress = $("#Address").val();
+    var specialization = $("#specialization").val();
 
-    // *********** //
     window.open(
-      "mailto:my.tooth.fairy0@gmail.com?subject=יצירת קשר  - " +
+      "mailto:my.tooth.fairy0@gmail.com?subject=בקשת הצטרפות לעמותה  - " +
         name +
-        "&body=מייל לחזרה: " +
-        emailUser +
+        "&body=היי, שמי " +
+        name +
+        ", אשמח לקחת חלק פעיל בעמותת פיית השיניים. פרטים על עצמי:" +
         "%0d" +
-        "%0d" 
+        "מייל: " +
+        emailVol +
+        "%0d" +
+        "טלפון: " +
+        phone +
+        "%0d" +
+        "כתובת: " +
+        adress +
+        "%0d" +
+        "התמחות: " +
+        specialization +
+        "%0d" +
+        "מי אני: " +
+        select +
+        "%0d"
     );
 
     // *********** //
   }
 
-  function pformSuccess() {
-    $("#privacyForm")[0].reset();
-    psubmitMSG(true, "Request Submitted!");
-    $("input").removeClass("notEmpty"); // resets the field label after submission
-  }
+  $("#12")
+  .validator()
+  .on("submit", function (event) {
+    if (event.isDefaultPrevented()) {
+      psubmitForm();
 
-  function pformError() {
-    $("#privacyForm")
-      .removeClass()
-      .addClass("shake animated")
-      .one(
-        "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-        function () {
-          $(this).removeClass();
-        }
-      );
-  }
-
-  function psubmitMSG(valid, msg) {
-    if (valid) {
-      var msgClasses = "h3 text-center tada animated";
-    } else {
-      var msgClasses = "h3 text-center";
+      // handle the invalid form...
+      pformError();
+      psubmitMSG(false, "Please fill all fields!");
     }
-    $("#pmsgSubmit").removeClass().addClass(msgClasses).text(msg);
-  }
+  });
+
+  /* login */
+
+  //   function pformSuccess() {
+  //     $("#privacyForm")[0].reset();
+  //     psubmitMSG(true, "Request Submitted!");
+  //     $("input").removeClass("notEmpty"); // resets the field label after submission
+  //   }
+
+  //   function pformError() {
+  //     $("#privacyForm")
+  //       .removeClass()
+  //       .addClass("shake animated")
+  //       .one(
+  //         "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+  //         function () {
+  //           $(this).removeClass();
+  //         }
+  //       );
+  //   }
+
+  //   function psubmitMSG(valid, msg) {
+  //     if (valid) {
+  //       var msgClasses = "h3 text-center tada animated";
+  //     } else {
+  //       var msgClasses = "h3 text-center";
+  //     }
+  //     $("#pmsgSubmit").removeClass().addClass(msgClasses).text(msg);
+  //   }
 
   /* Back To Top Button */
   // create the back to top button
