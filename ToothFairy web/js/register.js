@@ -1,51 +1,57 @@
-var firebaseConfig = {
-    apiKey: "AIzaSyD5B3hTjXXygIi62Sb9pyiolRAaR7moR0E",
-    authDomain: "tooth-fairy-web.firebaseapp.com",
-    databaseURL: "https://tooth-fairy-web-default-rtdb.firebaseio.com",
-    projectId: "tooth-fairy-web",
-    storageBucket: "tooth-fairy-web.appspot.com",
-    messagingSenderId: "473402834454",
-    appId: "1:473402834454:web:511aea6ff025a2c5817f37",
-    measurementId: "G-3KF2SC8288"
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyC9_qCGYu6YdTVNCxGHnV8T0SETnGyo8Qs",
+    authDomain: "toothfairyweb-6be63.firebaseapp.com",
+    projectId: "toothfairyweb-6be63",
+    storageBucket: "toothfairyweb-6be63.appspot.com",
+    messagingSenderId: "854109357498",
+    appId: "1:854109357498:web:e25bc99d544db5b31bc983",
+    measurementId: "G-GTMX6JLZCJ"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
+function reg() {
+  let userEmail = document.getElementById("remail").value;
+  let secUserEmail = document.getElementById("secremail").value;
 
+  let userPass = document.getElementById("rpass").value;
+  let secUserPass = document.getElementById("secrpass").value;
 
-  function reg(){
-    let userEmail = document.getElementById("remail").value;
-    let secuserEmail = document.getElementById("secremail").value;
-
-    let userPass = document.getElementById("rpass").value;
-    let secuserPass = document.getElementById("secrpass").value;
-
-    if(userEmail !=secuserEmail && userPass!=secuserPass){
-        alert("email or password invalid")
-        return
-    }
-
-    else{
-        firebase.auth().createUserWithEmailAndPassword(userEmail, userPass)
-        .then((userCredential) => {
-          // Signed in 
-          var user = userCredential.user;
-          window.location.href = "index.html"
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ..
-        });
-    }
-
-  
-
-  
+  // case the Email and password is not the same in all the textboxs
+  if (userEmail != secUserEmail || userPass != secUserPass) {
+    alert("Email or password invalid");
+    return;
   }
 
+  // case user didnt press the checkbox
+  else if (!document.getElementById("rterms").checked) {
+    // alert("check box")
+    return;
+  }
 
+  // case user already exsist
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(userEmail, userPass)
+    .then(function (firebaseUser) {
+      alert("user already exsist");
+      return
+    });
 
-
-
+  // make a new user
+  firebase.auth().createUserWithEmailAndPassword(userEmail, userPass)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+      alert("secsses to make user");
+      window.location.href = "index.html"
+      })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+    });
+}
