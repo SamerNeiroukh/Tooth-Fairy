@@ -71,7 +71,7 @@ function forgotpass() {
   auth
     .sendPasswordResetEmail(email)
     .then(function () {
-      alert("Email as been sent");
+      alert("מייל לשינוי סיסמה נשלח");
       window.location.href = "index.html";
     })
     .catch(function (error) {

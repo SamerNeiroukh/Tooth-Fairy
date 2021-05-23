@@ -1,7 +1,4 @@
-/* date is only sundays     */
-// function book_date() {
-//   document.getElementById("bookdate").step = "9";
-// }
+
 var firebaseConfig = {
   apiKey: "AIzaSyC9_qCGYu6YdTVNCxGHnV8T0SETnGyo8Qs",
   authDomain: "toothfairyweb-6be63.firebaseapp.com",
@@ -12,22 +9,9 @@ var firebaseConfig = {
   measurementId: "G-GTMX6JLZCJ",
 };
 
-// Initialize Cloud Firestore through Firebase
-// firebase.initializeApp({
-//   apiKey: "AIzaSyC9_qCGYu6YdTVNCxGHnV8T0SETnGyo8Qs",
-//   authDomain: "toothfairyweb-6be63.firebaseapp.com",
-//   projectId: "toothfairyweb-6be63",
-// });
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
-// const firebase = require("firebase");
-// // Required for side-effects
-// require("firebase/firestore");
-
-
 
 
 // logout user
@@ -35,7 +19,7 @@ function logout() {
   var rootRef = firebase.database().ref();
   var loggedInUser = firebase.auth();
   firebase.auth().signOut();
-  alert("Signed Out");
+  alert("החשבון התנתק");
   window.location.href = "index.html";
 }
 

@@ -28,7 +28,7 @@ function reg() {
 
   // case the Email and password is not the same in all the textboxs
   if (userEmail != secUserEmail || userPass != secUserPass) {
-    alert("Email or password invalid");
+    alert("מייל או סיסמה לא נכונים");
     return;
   }
 
@@ -43,7 +43,7 @@ function reg() {
     .auth()
     .signInWithEmailAndPassword(userEmail, userPass)
     .then(function (firebaseUser) {
-      alert("user already exsist");
+      alert("משתמש כבר קיים");
 
 
         var x = document.getElementById("user_exsist");
@@ -58,7 +58,7 @@ function reg() {
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
-      alert("secsses to make user");
+      alert("משתשמ נוצר בהצלחה");
       window.location.href = "index.html";
     })
     .catch((error) => {
