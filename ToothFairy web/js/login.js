@@ -14,9 +14,17 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+let db;
+
 $(document).ready(function () {
-  var x = document.getElementById("forgotpass");
+  db = firebase.firestore();
+
+  let x = document.getElementById("forgotpass");
+  let y = document.getElementById("booking");
+  let h = document.getElementById("logOutButton");
+  h.style.display = "none";
   x.style.display = "none";
+  y.style.display = "none";
 });
 
 
@@ -29,7 +37,16 @@ function login() {
     .signInWithEmailAndPassword(userEmail, userPass)
     .then(function (firebaseUser) {
       // alert("user logd in 2")
-      window.location.href = "booking.html";
+      // window.location.href = "booking.html";
+      let y = document.getElementById("booking");
+      let x = document.getElementById("forgotpass");
+      let z = document.getElementById("Log");
+      let h = document.getElementById("logOutButton");
+
+      y.style.display = "block";
+      h.style.display = "block";
+      x.style.display = "none";
+      z.style.display = "none";
 
       ffirebase.auth().signup;
     })
@@ -80,5 +97,46 @@ function forgotpass() {
       window.alert("Error : " + errorMessage);
     });
 }
+
+
+// logout user
+function logout() {
+  var rootRef = firebase.database().ref();
+  var loggedInUser = firebase.auth();
+  firebase.auth().signOut();
+  alert("החשבון התנתק");
+  // window.location.href = "index.html";
+  let y = document.getElementById("booking");
+  let x = document.getElementById("forgotpass");
+  let z = document.getElementById("Log");
+  let h = document.getElementById("logOutButton");
+
+  y.style.display = "none";
+  h.style.display = "none";
+  x.style.display = "none";
+  z.style.display = "block";
+}
+
+// 
+function addAppointment() {
+  db.collection("Patients").doc(firebase.auth().currentUser.email)
+    .set({
+      swname: $("#swname").val(),
+      pname: $("#pname").val(),
+      swemail: $("#swemail").val(),
+      swphone: $("#swphone").val(),
+      cmessage: $("#cmessage").val(),
+      bookdate: $("#bookdate").val(),
+
+    })
+    .then((docRef) => {
+      alert("firebase.auth().currentUser: " + firebase.auth().currentUser.email)
+      alert("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+      alert("Error adding document: ", error);
+    });
+}
+
 
 
