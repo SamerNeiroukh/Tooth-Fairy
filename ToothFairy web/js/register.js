@@ -58,7 +58,7 @@ function reg() {
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
-      alert("משתשמ נוצר בהצלחה");
+      alert("משתמש נוצר בהצלחה");
       window.location.href = "index.html";
     })
     .catch((error) => {
