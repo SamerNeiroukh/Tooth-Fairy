@@ -14,11 +14,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-let db;
+
+
 
 $(document).ready(function () {
-  db = firebase.firestore();
-
   let x = document.getElementById("forgotpass");
   let y = document.getElementById("booking");
   let h = document.getElementById("logOutButton");
@@ -48,7 +47,10 @@ function login() {
       x.style.display = "none";
       z.style.display = "none";
 
-      ffirebase.auth().signup;
+      firebase.auth().signup;
+      
+      addAppointment()
+
     })
     .catch(function (error) {
       // Handle Errors here.
@@ -119,6 +121,7 @@ function logout() {
 
 // 
 function addAppointment() {
+  let db = firebase.firestore();
   db.collection("Patients").doc(firebase.auth().currentUser.email)
     .set({
       swname: $("#swname").val(),
@@ -131,7 +134,7 @@ function addAppointment() {
     })
     .then((docRef) => {
       alert("firebase.auth().currentUser: " + firebase.auth().currentUser.email)
-      alert("Document written with ID: ", docRef.id);
+      // alert("Document written with ID: ", docRef.id);
     })
     .catch((error) => {
       alert("Error adding document: ", error);
