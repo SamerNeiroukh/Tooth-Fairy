@@ -18,6 +18,7 @@ $(document).ready(function () {
   x.style.display = "none";
 });
 
+
 function reg() {
   let userEmail = document.getElementById("remail").value;
   let secUserEmail = document.getElementById("secremail").value;

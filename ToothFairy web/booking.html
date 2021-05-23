@@ -32,6 +32,7 @@
     <link href="css/styles.css" rel="stylesheet">
 
         <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>  
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
     <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
@@ -48,7 +49,7 @@
     <link rel="icon" href="images/logo2.png">
 </head>
 
-<body data-spy="scroll" data-target=".fixed-top" onload="book_date()">
+<body data-spy="scroll" data-target=".fixed-top">
 
 
     <!-- Navbar -->
@@ -195,8 +196,6 @@
 
                                     <!-- Request Form -->
 
-                                    <div class="form-container">
-                                        <form id="requestForm" data-toggle="validator" data-focus="false">
                                             <div class="form-group">
                                                 <input type="text" class="form-control-input" id="swname" name="swname"
                                                     required>
@@ -242,12 +241,10 @@
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="form-control-submit-button">שליחה</button>
+                                                <button type="submit" onclick = "addAppointment()" class="form-control-submit-button">שליחה</button>
                                             </div>
                                             <div class="form-message">
                                                 <div id="rmsgSubmit" class="h3 text-center hidden"></div>
-                                            </div>
-                                        </form>
                                     </div> <!-- end of form-container -->
                                     <!-- end of request form -->
 
