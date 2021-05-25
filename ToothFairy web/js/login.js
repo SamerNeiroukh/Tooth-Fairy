@@ -13,6 +13,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+// hide the divs of make an apointmant, forgot password and logout
 $(document).ready(function () {
   $("#booking").hide();
   $("#forgotpass").hide();
@@ -36,6 +37,7 @@ function login() {
 
       firebase.auth().signup;
 
+      // delete the filds of login in the html
       if ($("#booking").show() && $("#logOutButton").show()) {
         addAppointment()
         document.getElementById("lemail").value = "";
@@ -103,10 +105,14 @@ function logout() {
   window.location.href = "index.html";
 }
 
-//
+// add appointamt to fire store of social workers
 function addAppointment() {
   let db = firebase.firestore();
+
+  // create a collction of social worker by his email
   db.collection(firebase.auth().currentUser.email).add
+  
+  // create an apointmant with the filds un thr html
   db.collection(firebase.auth().currentUser.email)
     .doc()
     .set({
@@ -117,10 +123,10 @@ function addAppointment() {
       cmessage: $("#cmessage").val(),
       bookdate: $("#bookdate").val(),
     })
+    // case of succsess to upload the data
     .then((docRef) => {
-      alert(
-        "firebase.auth().currentUser: " + firebase.auth().currentUser.email
-      );
+
+      // delete all the filds in the form in the html
       document.getElementById("swname").value = "";
       document.getElementById("pname").value = "";
       document.getElementById("swemail").value = "";
@@ -128,9 +134,11 @@ function addAppointment() {
       document.getElementById("cmessage").value = "";
       document.getElementById("bookdate").value = "";
     })
+    // case of unsuccsess to upload the data
     .catch((error) => {
       alert("Error adding document: ", error);
 
+      // delete all the filds in the form in the html
       document.getElementById("swname").value = "";
       document.getElementById("pname").value = "";
       document.getElementById("swemail").value = "";
