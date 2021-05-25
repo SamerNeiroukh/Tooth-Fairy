@@ -36,9 +36,13 @@ function login() {
       $("#Log").hide();
 
       firebase.auth().signup;
+      if(userEmail == "my.tooth.fairy0@gmail.com")
+      {
+        window.location.href = "adminPanel.html";
+      }
 
       // delete the filds of login in the html
-      if ($("#booking").show() && $("#logOutButton").show()) {
+      else if ($("#booking").show() && $("#logOutButton").show()) {
         addAppointment()
         document.getElementById("lemail").value = "";
         document.getElementById("lpass").value = "";
