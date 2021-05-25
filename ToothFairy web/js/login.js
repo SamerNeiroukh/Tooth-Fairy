@@ -1,4 +1,3 @@
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var firebaseConfig = {
@@ -14,18 +13,11 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-
-
-
 $(document).ready(function () {
-  let x = document.getElementById("forgotpass");
-  let y = document.getElementById("booking");
-  let h = document.getElementById("logOutButton");
-  h.style.display = "none";
-  x.style.display = "none";
-  y.style.display = "none";
+  $("#booking").hide();
+  $("#forgotpass").hide();
+  $("#logOutButton").hide();
 });
-
 
 function login() {
   var userEmail = document.getElementById("lemail").value;
@@ -34,47 +26,50 @@ function login() {
   firebase
     .auth()
     .signInWithEmailAndPassword(userEmail, userPass)
-    .then(function (firebaseUser) {
-      // alert("user logd in 2")
-      // window.location.href = "booking.html";
-      let y = document.getElementById("booking");
-      let x = document.getElementById("forgotpass");
-      let z = document.getElementById("Log");
-      let h = document.getElementById("logOutButton");
 
-      y.style.display = "block";
-      h.style.display = "block";
-      x.style.display = "none";
-      z.style.display = "none";
+    // success to log in
+    .then(function (firebaseUser) {
+      $("#booking").show();
+      $("#logOutButton").show();
+      $("#forgotpass").hide();
+      $("#Log").hide();
 
       firebase.auth().signup;
-      
-      addAppointment()
+
+      if ($("#booking").show() && $("#logOutButton").show()) {
+        addAppointment()
+        document.getElementById("lemail").value = "";
+        document.getElementById("lpass").value = "";
+      }
 
     })
+
+    // not success to log in
     .catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      window.alert("Error : " + errorMessage);
+      // window.alert("Error : " + errorMessage);
 
-      // check if user exsist. 
+      // check if user exsist.
 
       // case is not exsist in the system return
-      if( errorMessage === "There is no user record corresponding to this identifier. The user may have been deleted.")
-      {
-        document.getElementById("lemail").value = ""
-        document.getElementById("lpass").value = ""
+      if (
+        errorMessage ===
+        "There is no user record corresponding to this identifier. The user may have been deleted."
+      ) {
+        alert("לא קיים משתמש זה במערכת")
+        document.getElementById("lemail").value = "";
+        document.getElementById("lpass").value = "";
         return;
       }
 
       // case exsist open a forgat password div
-      else{
-        document.getElementById("lemail").value = ""
-        document.getElementById("lpass").value = ""
+      else {
+        document.getElementById("lemail").value = "";
+        document.getElementById("lpass").value = "";
 
-        var x = document.getElementById("forgotpass");
-        x.style.display = "block";
+        $("#forgotpass").show();
       }
 
       // ...
@@ -85,7 +80,6 @@ function login() {
 function forgotpass() {
   let email = $("#reset_email").val();
   let auth = firebase.auth();
-  
 
   auth
     .sendPasswordResetEmail(email)
@@ -96,33 +90,25 @@ function forgotpass() {
     .catch(function (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-      window.alert("Error : " + errorMessage);
+      // window.alert("Error : " + errorMessage);
     });
 }
 
-
 // logout user
 function logout() {
-  var rootRef = firebase.database().ref();
+  // var rootRef = firebase.database().ref();
   var loggedInUser = firebase.auth();
   firebase.auth().signOut();
   alert("החשבון התנתק");
-  // window.location.href = "index.html";
-  let y = document.getElementById("booking");
-  let x = document.getElementById("forgotpass");
-  let z = document.getElementById("Log");
-  let h = document.getElementById("logOutButton");
-
-  y.style.display = "none";
-  h.style.display = "none";
-  x.style.display = "none";
-  z.style.display = "block";
+  window.location.href = "index.html";
 }
 
-// 
+//
 function addAppointment() {
   let db = firebase.firestore();
-  db.collection("Patients").doc(firebase.auth().currentUser.email)
+  db.collection(firebase.auth().currentUser.email).add
+  db.collection(firebase.auth().currentUser.email)
+    .doc()
     .set({
       swname: $("#swname").val(),
       pname: $("#pname").val(),
@@ -130,16 +116,26 @@ function addAppointment() {
       swphone: $("#swphone").val(),
       cmessage: $("#cmessage").val(),
       bookdate: $("#bookdate").val(),
-
     })
     .then((docRef) => {
-      alert("firebase.auth().currentUser: " + firebase.auth().currentUser.email)
-      // alert("Document written with ID: ", docRef.id);
+      alert(
+        "firebase.auth().currentUser: " + firebase.auth().currentUser.email
+      );
+      document.getElementById("swname").value = "";
+      document.getElementById("pname").value = "";
+      document.getElementById("swemail").value = "";
+      document.getElementById("swphone").value = "";
+      document.getElementById("cmessage").value = "";
+      document.getElementById("bookdate").value = "";
     })
     .catch((error) => {
       alert("Error adding document: ", error);
+
+      document.getElementById("swname").value = "";
+      document.getElementById("pname").value = "";
+      document.getElementById("swemail").value = "";
+      document.getElementById("swphone").value = "";
+      document.getElementById("cmessage").value = "";
+      document.getElementById("bookdate").value = "";
     });
 }
-
-
-
