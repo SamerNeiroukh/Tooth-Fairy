@@ -21,7 +21,7 @@
     <link rel="icon" href="images/logo2.png">
 </head>
 
-<body data-spy="scroll" data-target=".fixed-top">
+<body data-spy="scroll" data-target=".fixed-top" onload="getImages()">
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
@@ -320,61 +320,19 @@
     <div id="gallary"></div>
     <h1><span class="turquoise"> גלריה</span></h1>
 
-<div class="container">
-  <div class="mySlides">
-    <div class="numbertext">1 / 9</div>
-    <img src="images/1.jpg" style="width:55%">
-  </div>
-
-  <div class="mySlides">
-    <div class="numbertext">2 / 9</div>
-    <img src="images/3.jpg" style="width:55%">
-  </div>
-
-  <div class="mySlides">
-    <div class="numbertext">3 / 9</div>
-    <img src="images/4.jpg" style="width:55%">
-  </div>
+    <div class="container" id = "container">
+        <div id="pictures"></div>
     
-  <div class="mySlides">
-    <div class="numbertext">4 / 9</div>
-    <img src="images/5.jpg" style="width:55%">
-  </div>
+        <button class="prevImg" onclick="plusSlides(-1)">❮</button>
+        <button class="nextImg" onclick="plusSlides(1)">❯</button>
 
-  <div class="mySlides">
-    <div class="numbertext">5 / 9</div>
-    <img src="images/6.jpg" style="width:55%">
-  </div>
-    
-  <div class="mySlides">
-    <div class="numbertext">6 / 9</div>
-    <img src="images/7.jpg" style="width:55%">
-  </div>
-
-    <div class="mySlides">
-    <div class="numbertext">7 / 9</div>
-    <img src="images/8.jpg" style="width:55%">
-  </div>
-
-    <div class="mySlides">
-    <div class="numbertext">8 / 9</div>
-    <img src="images/9.jpg" style="width:55%">
-  </div>
-
-    <div class="mySlides">
-    <div class="numbertext">9 / 9</div>
-    <img src="images/10.jpg" style="width:55%">
-  </div>
-    
-  <a class="prev" onclick="plusSlides(-1)">❮</a>
-  <a class="next" onclick="plusSlides(1)">❯</a>
-
-  <div class="caption-container">
-    <p id="caption"></p>
-  </div>
-
+    </div>
 </div>
-</div>
+
+
+<br>
+<br>
+
 
 
                     <!-- Testimonials -->
@@ -756,10 +714,12 @@
 
 
                     <!-- Scripts -->
-                    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>  
                     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>  
                     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
                     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script> 
+                    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script> 
                     <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
                     <script src="js/popper.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
                     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
@@ -770,6 +730,7 @@
                     <script src="js/validator.min.js"></script>
                     <!-- Validator.js - Bootstrap plugin that validates forms -->
                     <script src="js/scripts.js"></script> <!-- Custom scripts -->
+                    <script src="js/index.js"></script> 
                     <script type="text/javascript" src="/js/scripts.js"></script>
                     </head>
 </body>

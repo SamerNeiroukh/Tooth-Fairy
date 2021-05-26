@@ -2261,7 +2261,92 @@ a:hover.back-to-top {
 
 /* ///////////////////////////////////////////////////////////////////////////////////////// */
 
+* {
+	box-sizing: border-box;
+  }
+  
+  /* Position the image container (needed to position the left and right arrows) */
+  .container {
+	position: relative;
+  }
+  
+  /* Hide the images by default */
+  .mySlides {
+	display: none;
 
+    object-fit: cover;
+  }
+  
+  /* Add a pointer when hovering over the thumbnail images */
+  .cursor {
+	cursor: pointer;
+  }
+  
+  /* Next & previous buttons */
+  .prevImg,
+  .nextImg {
+	display: inline-block;
+	width: 7%;
+	height: 3.125rem;
+	border: 1px solid #00bfd8;
+	border-radius: 1.5rem;
+	background-color: #00bfd8;
+	color: #fff;
+	font: 700 0.75rem/1.75rem "Raleway", sans-serif;
+	cursor: pointer;
+	transition: all 0.2s;
+  }
+  
+  /* Position the "next button" to the right */
+
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prevImg:hover,
+  .nextImg:hover {
+	background-color: transparent;
+	color: #00bfd8;
+  }
+  
+  /* Number text (1/3 etc) */
+  .numbertext {
+	color: #f2f2f2;
+	font-size: 12px;
+	padding: 8px 12px;
+	position: absolute;
+	top: 0;
+  }
+  
+  /* Container for image text */
+  .caption-container {
+	text-align: center;
+	background-color: #222;
+	padding: 2px 16px;
+	color: white;
+  }
+  
+  .row:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
+  
+  /* Six columns side by side */
+  .column {
+	float: left;
+	width: 16.66%;
+  }
+  
+  /* Add a transparency effect for thumnbail images */
+  .demo {
+	opacity: 0.6;
+  }
+  
+  .active,
+  .demo:hover {
+	opacity: 1;
+  }
+
+/* chose image in admin page */
 #myimg{
 	height: 50%;
 	width: 50%;
@@ -2270,3 +2355,4 @@ a:hover.back-to-top {
 	margin-left: auto;
 	margin-right: auto;
 }
+
