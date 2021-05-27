@@ -55,6 +55,15 @@
             <button class="btn-solid-lg page-scroll" onclick="logout()" id = "logout" >התנתק </button>
         </div>
 
+        <!-- *****************************
+
+
+        יש כבר הכנה לכל הפונקציות שצריכות להיות, לכתוב רק בתוך הדיבים והפונקציות שכבר הכנו !
+        
+        
+        
+        ****************************** -->
+
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,22 +73,22 @@
         <!-- end of mobile menu toggle button -->
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link page-scroll" href="index.html#contact">צרו קשר</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#gallary">גלריה</a>
+                    <a class="nav-link page-scroll" onclick="manageGallery()">ניהול גלריה</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link page-scroll" href="index.html#JoinUs">הצטרפו אלינו</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" onclick="managePersonalStories()">ניהול סיפורים אישיים</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#Donate">לתרומה</a>
+                    <a class="nav-link page-scroll"  onclick="manageSocialWorkers()">ניהול עו"ס</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#stories">סיפורים אישיים</a>
-                </li>
-                <li class="nav-item dropdown" dir="rtl"> 
+                <!-- <li class="nav-item dropdown" dir="rtl"> 
                     <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button"
                         aria-haspopup="true" aria-expanded="false">מי אנחנו</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -91,9 +100,9 @@
                         <a class="dropdown-item" href="index.html#video"><span class="item-text" >סרטון הכירות</span></a>
                     </a>
                     </div>
-                </li>
+                </li> -->
                 <!-- Dropdown Menu -->
-                <li class="nav-item dropdown" dir="rtl">
+                <!-- <li class="nav-item dropdown" dir="rtl">
                     <a class="nav-link dropdown-toggle page-scroll" href="#login/register" id="navbarDropdown"
                         role="button" aria-haspopup="true" aria-expanded="false">התחברות\הרשמה</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -102,9 +111,12 @@
                         <a class="dropdown-item" href="register.html"><span class="item-text" dir="rtl">הרשמה
                                 לאתר</span></a>
                     </div>
-                </li>
+                </li> -->
                 <!-- end of dropdown menu -->
 
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" onclick= "manageAppo()">ניהול תורים <span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="index.html">בית <span class="sr-only">(current)</span></a>
                 </li>
@@ -146,9 +158,21 @@
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
 
-                
+                    <div id = "welcome" onload="welcomeAdmin()"  dir="rtl">
+                        <h3 dir="rtl">ברוכים הבאים לפאנל ניהול של העמותה</h3><br><br>
+                        <h6 dir="rtl">כאן תוכלו:
+                            <ul>
+                                <li dir="rtl">לנהל זימון תורים</li>
+                                <li dir="rtl">לאשר עובדות סוציאליות חדשות</li>
+                                <li dir="rtl">לנהל את הסיפורים האישיים</li>
+                                <li dir="rtl">לנהל את הגלריה</li>
 
-                    <div id = "img_upload">
+                              </ul>
+                        </h6>
+
+                    </div>
+
+                    <div id = "img_manage" style="display:none;">
                             <div class="form-group">
                             
                             <input type="text" class="form-control-input" id="namebox" required>
@@ -165,9 +189,37 @@
                             <button id="upload" class="form-control-submit-button"> העלאה תמונה </button>
                             <div class="help-block with-errors"></div>
                             </div>
+
+                            <br>
+                            <br>
+                            
+                            <button id = "test" onclick="getImagesToDelete()">test</button>
+                            <div id="delete_imgs"></div>
+                            
+                    </div>                    
+                    <div id = "manageStories" style="display:none;">סיפורים אישיים
+                    
+                        <!-- <div class="form-group">
+                            
+                            <input type="text" class="form-control-input" id="namebox" required>
+                            <label class="label-control" for="cname">הכנס אות ראשונה של מספר הסיפור</label>
+                            <div class="help-block with-errors"></div>
+
+                            <input type="text" class="form-control-input" id="namebox" required>
+                            <label class="label-control" for="cname">הכנס את הסיפור</label>
+                            <div class="help-block with-errors"></div>
+                            <img id="myimg"> <label id="UpProgress"></label> <br><br>
+                            </div> -->
+                    
+                    
+                    
                     </div>
 
-                            
+                    <div id = "manage_appointments" style="display:none;">
+                        ניהול תורים
+                    </div>   
+                    
+                    <div id = "manageSW" style="display:none;">ניהול עובדות סוציאליות</div>
 
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

@@ -13,6 +13,34 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+// onload = function init() {
+//   $("#manage_appointments").show();
+
+// }
+
+
+// *****************************
+
+
+// יש כבר הכנה לכל הפונקציות שצריכות להיות, לכתוב רק בתוך הדיבים והפונקציות שכבר הכנו !
+
+
+
+// ******************************
+function welcomeAdmin(){
+  $("#manageSW").hide();
+  $("#img_manage").hide();
+  $("#manageStories").hide();
+  $("#manage_appointments").hide();
+  $("welcome").show();
+}
+
+function manageGallery(){
+  $("#manageStories").hide();
+  $("#manageSW").hide();
+  $("#manage_appointments").hide();
+  $("welcome").hide();
+  $("#img_manage").show();
 let ImgName, ImgUrl;
 let files = [];
 let reader;
@@ -81,6 +109,46 @@ document.getElementById("upload").onclick = function () {
     });
 }
 
+// get all images from the firebase
+function getImagesToDelete() {
+  let rootref = firebase.database().ref().child("Pictures");
+
+  rootref.on("child_added", (snap) => {
+    let image = snap.child("Link").val();
+    let imageName = snap.child("Name").val();
+    
+    let str = `<div> <button id="${imageName}"` +  "onclick=deleteImg('"+imageName+"')" + `> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`
+
+    $("#delete_imgs").append(str);
+  });
+}
+
+
+// delete images from firebase storage and data of image from firebase realtime database
+function deleteImg(imageName) {
+
+// delete image from firebase storage
+firebase.storage().ref("Images/" + imageName + ".png").delete()
+
+// delete data of image from firebase realtime database
+firebase.database().ref('Pictures').child(imageName).remove();
+
+// reset div
+let div = document.getElementById("delete_imgs");
+while(div.firstChild) {
+    div.removeChild(div.firstChild);
+}
+$("#manageStories").hide();
+$("#manageSW").hide();
+$("#manage_appointments").hide();
+$("welcome").hide();
+$("#img_manage").show();
+// call back to all images
+getImagesToDelete()
+
+}
+
+}
 
 // get img from database by name
 // document.getElementById('retrieve').onclick = function(){
@@ -96,6 +164,37 @@ document.getElementById("upload").onclick = function () {
 // });
 
 
+
+
+// manage appointments
+function manageAppo(){
+  //ניהול תורים
+  $("#img_manage").hide();
+  $("#manageStories").hide();
+  $("#welcome").hide();
+  $("#manageSW").hide();
+  $("#manage_appointments").show();
+}
+
+// manage new social workers
+function manageSocialWorkers(){
+  $("#img_manage").hide();
+  $("#manageStories").hide();
+  $("#welcome").hide();
+  $("#manage_appointments").hide();
+  $("#manageSW").show();
+
+}
+
+
+// manage personal stories
+function managePersonalStories(){
+  $("#img_manage").hide();
+  $("#manageSW").hide();
+  $("#welcome").hide();
+  $("#manage_appointments").hide();
+  $("#manageStories").show();
+}
 // logout admin
 function logout() {
   // var rootRef = firebase.database().ref();
