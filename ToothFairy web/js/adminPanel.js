@@ -18,16 +18,12 @@ firebase.analytics();
 
 // }
 
-
 // *****************************
-
 
 // יש כבר הכנה לכל הפונקציות שצריכות להיות, לכתוב רק בתוך הדיבים והפונקציות שכבר הכנו !
 
-
-
 // ******************************
-function welcomeAdmin(){
+function welcomeAdmin() {
   $("#manageSW").hide();
   $("#img_manage").hide();
   $("#manageStories").hide();
@@ -35,139 +31,122 @@ function welcomeAdmin(){
   $("welcome").show();
 }
 
-function manageGallery(){
+function manageGallery() {
   $("#manageStories").hide();
   $("#manageSW").hide();
   $("#manage_appointments").hide();
   $("welcome").hide();
   $("#img_manage").show();
-let ImgName, ImgUrl;
-let files = [];
-let reader;
+}
 
-// select image from pc
-document.getElementById("select").onclick = function (e) {
-  let input = document.createElement("input");
-  input.type = "file";
+  let ImgName, ImgUrl;
+  let files = [];
+  let reader;
 
-  input.onchange = (e) => {
-    files = e.target.files;
-    reader = new FileReader();
-    reader.onload = function () {
-      document.getElementById("myimg").src = reader.result;
+  // select image from pc
+  document.getElementById("select").onclick = function (e) {
+    let input = document.createElement("input");
+    input.type = "file";
+
+    input.onchange = (e) => {
+      files = e.target.files;
+      reader = new FileReader();
+      reader.onload = function () {
+        document.getElementById("myimg").src = reader.result;
+      };
+      reader.readAsDataURL(files[0]);
     };
-    reader.readAsDataURL(files[0]);
+    input.click();
   };
-  input.click();
-};
 
+  // upload image to the firebase storege
+  document.getElementById("upload").onclick = function () {
+    // case not selected name for the image return
+    if (!$("#namebox").val()) {
+      alert("נא לבחור שם לתמונה");
+      return;
+    }
 
-// upload image to the firebase storege
-document.getElementById("upload").onclick = function () {
-  // case not selected name for the image return
-  if(!$('#namebox').val())
-  {
-    alert("נא לבחור שם לתמונה")
-    return
+    // get the image from the text box
+    ImgName = document.getElementById("namebox").value;
+    let uploadTask = firebase
+      .storage()
+      .ref("Images/" + ImgName + ".png")
+      .put(files[0]);
+
+    // upload the image to the firebase storege
+    uploadTask.on(
+      "state_changed",
+      function (snapshot) {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        document.getElementById("UpProgress").innerHTML =
+          "Upload " + progress + "%";
+      },
+
+      function (error) {
+        alert("error to upload img");
+      },
+
+      // upload the image ditails to firebase database of the image
+      function () {
+        uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
+          ImgUrl = url;
+
+          firebase
+            .database()
+            .ref("Pictures/" + ImgName)
+            .set({
+              Name: ImgName,
+              Link: ImgUrl,
+            });
+          alert("תמונה עלתה בהצלחה");
+        });
+      }
+    );
+  };
+
+  // get all images from the firebase
+  function getImagesToDelete() {
+    let rootref = firebase.database().ref().child("Pictures");
+
+    rootref.on("child_added", (snap) => {
+      let image = snap.child("Link").val();
+      let imageName = snap.child("Name").val();
+
+      let str = 
+        `<a> בבקשה לחץ בבקשה על התמונה שברצונך למחוק</a> <div> <button id="${imageName}"` +
+        "onclick=deleteImg('" +
+        imageName +
+        "')" +
+        `> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`;
+
+      $("#delete_imgs").append(str);
+    });
   }
 
-  // get the image from the text box
-  ImgName = document.getElementById("namebox").value;
-  let uploadTask = firebase
-    .storage()
-    .ref("Images/" + ImgName + ".png")
-    .put(files[0]);
+  // delete images from firebase storage and data of image from firebase realtime database
+  function deleteImg(imageName) {
+    // delete image from firebase storage
+    firebase
+      .storage()
+      .ref("Images/" + imageName + ".png")
+      .delete();
 
-  // upload the image to the firebase storege 
-  uploadTask.on(
-    'state_changed',
-    function (snapshot) {
-      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      document.getElementById('UpProgress').innerHTML =
-        'Upload ' + progress + '%';
-    },
+    // delete data of image from firebase realtime database
+    firebase.database().ref("Pictures").child(imageName).remove();
 
-    function (error) {
-      alert("error to upload img");
-    },
-
-    // upload the image ditails to firebase database of the image
-    function () {
-      uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
-        ImgUrl = url;
-
-        firebase
-          .database()
-          .ref('Pictures/' + ImgName)
-          .set({
-            Name: ImgName,
-            Link: ImgUrl,
-          });
-          alert("תמונה עלתה בהצלחה");
-        }
-      );
-    });
-}
-
-// get all images from the firebase
-function getImagesToDelete() {
-  let rootref = firebase.database().ref().child("Pictures");
-
-  rootref.on("child_added", (snap) => {
-    let image = snap.child("Link").val();
-    let imageName = snap.child("Name").val();
-    
-    let str = `<div> <button id="${imageName}"` +  "onclick=deleteImg('"+imageName+"')" + `> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`
-
-    $("#delete_imgs").append(str);
-  });
-}
-
-
-// delete images from firebase storage and data of image from firebase realtime database
-function deleteImg(imageName) {
-
-// delete image from firebase storage
-firebase.storage().ref("Images/" + imageName + ".png").delete()
-
-// delete data of image from firebase realtime database
-firebase.database().ref('Pictures').child(imageName).remove();
-
-// reset div
-let div = document.getElementById("delete_imgs");
-while(div.firstChild) {
-    div.removeChild(div.firstChild);
-}
-$("#manageStories").hide();
-$("#manageSW").hide();
-$("#manage_appointments").hide();
-$("welcome").hide();
-$("#img_manage").show();
-// call back to all images
-getImagesToDelete()
-
-}
-
-}
-
-// get img from database by name
-// document.getElementById('retrieve').onclick = function(){
-//   ImgName = document.getElementById('namebox').value;
-//   firebase.database().ref('Pictures/' + ImgName).on('value', function(snapshot){
-//     document.getElementById('myimg').src = snapshot.val().Link;
-//   });
-// }
-
-
-// firebase.database().ref('Pictures/' + ImgUrl).on('value', function(snapshot){
-//   document.getElementById('myimg').src = snapshot.val().Link;
-// });
-
-
+    // reset div
+    let div = document.getElementById("delete_imgs");
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
+    // call back to all images
+    getImagesToDelete();
+  }
 
 
 // manage appointments
-function manageAppo(){
+function manageAppo() {
   //ניהול תורים
   $("#img_manage").hide();
   $("#manageStories").hide();
@@ -177,18 +156,16 @@ function manageAppo(){
 }
 
 // manage new social workers
-function manageSocialWorkers(){
+function manageSocialWorkers() {
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#welcome").hide();
   $("#manage_appointments").hide();
   $("#manageSW").show();
-
 }
 
-
 // manage personal stories
-function managePersonalStories(){
+function managePersonalStories() {
   $("#img_manage").hide();
   $("#manageSW").hide();
   $("#welcome").hide();
