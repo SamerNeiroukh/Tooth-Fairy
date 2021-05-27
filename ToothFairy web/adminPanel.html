@@ -73,47 +73,17 @@
         <!-- end of mobile menu toggle button -->
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
-                <!-- <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#contact">צרו קשר</a>
-                </li> -->
+
                 <li class="nav-item">
                     <a class="nav-link page-scroll" onclick="manageGallery()">ניהול גלריה</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#JoinUs">הצטרפו אלינו</a>
-                </li> -->
+
                 <li class="nav-item">
                     <a class="nav-link page-scroll" onclick="managePersonalStories()">ניהול סיפורים אישיים</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll"  onclick="manageSocialWorkers()">ניהול עו"ס</a>
                 </li>
-                <!-- <li class="nav-item dropdown" dir="rtl"> 
-                    <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button"
-                        aria-haspopup="true" aria-expanded="false">מי אנחנו</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class = "nav-link page-scroll" id="about_us_dropdown"
-                        <a class="dropdown-item" href="index.html#teams"><span class="item-text" >על המחלקות</span></a>
-                    </a>
-                    <div class="dropdown-items-divide-hr"></div>
-                    <a class = "nav-link page-scroll" id="about_us_dropdown"
-                        <a class="dropdown-item" href="index.html#video"><span class="item-text" >סרטון הכירות</span></a>
-                    </a>
-                    </div>
-                </li> -->
-                <!-- Dropdown Menu -->
-                <!-- <li class="nav-item dropdown" dir="rtl">
-                    <a class="nav-link dropdown-toggle page-scroll" href="#login/register" id="navbarDropdown"
-                        role="button" aria-haspopup="true" aria-expanded="false">התחברות\הרשמה</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="login.html"><span class="item-text" dir="rtl">התחברות</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="register.html"><span class="item-text" dir="rtl">הרשמה
-                                לאתר</span></a>
-                    </div>
-                </li> -->
-                <!-- end of dropdown menu -->
-
                 <li class="nav-item">
                     <a class="nav-link page-scroll" onclick= "manageAppo()">ניהול תורים <span class="sr-only">(current)</span></a>
                 </li>
@@ -148,7 +118,7 @@
                 <div class="row">
 
 
-    <div id="admin_panel">
+    <div id="admin_panel" class="form_panel">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -172,7 +142,7 @@
 
                     </div>
 
-                    <div id = "img_manage" style="display:none;">
+                    <div id = "img_manage">
                             <div class="form-group">
                             
                             <input type="text" class="form-control-input" id="namebox" required>
@@ -197,7 +167,7 @@
                             
                     </div>
 
-                    <div id = "manageStories" style="display:none;">סיפורים אישיים
+                    <div id = "manageStories" >סיפורים אישיים
                     
                         <!-- <div class="form-group">
                             
@@ -215,11 +185,11 @@
                     
                     </div>
 
-                    <div id = "manage_appointments" style="display:none;">
+                    <div id = "manage_appointments">
                         ניהול תורים
                     </div>   
                     
-                    <div id = "manageSW" style="display:none;">ניהול עובדות סוציאליות</div>
+                    <div id = "manageSW">ניהול עובדות סוציאליות</div>
 
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

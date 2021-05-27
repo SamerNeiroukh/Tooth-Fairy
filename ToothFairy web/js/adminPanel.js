@@ -23,13 +23,23 @@ firebase.analytics();
 // יש כבר הכנה לכל הפונקציות שצריכות להיות, לכתוב רק בתוך הדיבים והפונקציות שכבר הכנו !
 
 // ******************************
-function welcomeAdmin() {
+
+$( document ).ready(function() {
   $("#manageSW").hide();
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#manage_appointments").hide();
   $("welcome").show();
-}
+});
+
+
+// function welcomeAdmin() {
+//   $("#manageSW").hide();
+//   $("#img_manage").hide();
+//   $("#manageStories").hide();
+//   $("#manage_appointments").hide();
+//   $("welcome").show();
+// }
 
 function manageGallery() {
   $("#manageStories").hide();
