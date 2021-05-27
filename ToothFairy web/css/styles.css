@@ -2360,6 +2360,9 @@ a:hover.back-to-top {
 	text-align: right;
 }
 
+#manage_appointments{
+	text-align: right;
+}
 
 .form_panel{
 	background-color: rgba(175, 246, 255, 0.5);

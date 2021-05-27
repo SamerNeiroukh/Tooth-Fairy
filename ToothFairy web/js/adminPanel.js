@@ -42,10 +42,10 @@ $( document ).ready(function() {
 // }
 
 function manageGallery() {
+  $("#welcome").hide();
   $("#manageStories").hide();
   $("#manageSW").hide();
   $("#manage_appointments").hide();
-  $("welcome").hide();
   $("#img_manage").show();
 }
 
@@ -157,12 +157,118 @@ function manageGallery() {
 
 // manage appointments
 function manageAppo() {
-  //ניהול תורים
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#welcome").hide();
   $("#manageSW").hide();
   $("#manage_appointments").show();
+
+  let str = "<thead class='thead-dark'>" + "<tr><th scope='col'>פרטים נוספים</th><th scope='col'>תאריך התור</th>";
+  str+= "<th scope='col'>שם המטופל</th><th scope='col'>מייל העוס/ית</th><th scope='col'>טלפון העוס/ית</th><th scope='col'>שם העוס/ית</th></tr></thead>";
+
+
+//   var database = firebase.database().ref().child('toothfairyweb-6be63');
+//   database.once('value', function(snapshot){
+//       if(snapshot.exists()){
+//           var content = '';
+
+//           snapshot.forEach(function(data){
+//               var Email = data[snapshot].swname.val();
+//               // var Name = data.val().Name;
+//               // var Phone = data.val().Phone;
+//               alert(Email);
+//               // content += '<tr>';
+//               // content += '<td>' + Email + '</td>'; //column1
+//               // content += '<td>' + Name + '</td>';//column2
+//               // content += '<td>' + Phone + '</td>';//column2
+//               // content += '</tr>';
+//   });
+
+//   str+=content;
+//     // $('#ex-table').append(content);
+// }
+// });
+
+
+//   // let db = firebase.firestore();
+//   // const admin =  require(firebase-admin);
+//   // const db = admin.firestore();
+  
+//   // db.listCollections()
+//   // .then(snapshot=>{
+//   //     snapshot.forEach(snaps=>{
+//   //         console.log("may");  // GET LIST OF ALL COLLECTIONS
+//   //     })
+//   // })
+//   // .catch(error=>console.log(error));
+//   //snaps["_queryOptions"].collectionId
+//   // var docRef = db.collection().doc("SF");
+
+//   // docRef.get().then((doc) => {
+//   //     if (doc.exists) {
+//   //         console.log("Document data:", doc.data());
+//   //     } else {
+//   //         // doc.data() will be undefined in this case
+//   //         console.log("No such document!");
+//   //     }
+//   // }).catch((error) => {
+//   //     console.log("Error getting document:", error);
+//   // });
+
+
+//   {/* <tbody>
+//   <tr>
+//     <th scope="row">1</th>
+//     <td>Mark</td>
+//     <td>Otto</td>
+//     <td>@mdo</td>
+//   </tr>
+//   <tr>
+//     <th scope="row">2</th>
+//     <td>Jacob</td>
+//     <td>Thornton</td>
+//     <td>@fat</td>
+//   </tr>
+//   <tr>
+//     <th scope="row">3</th>
+//     <td>Larry</td>
+//     <td>the Bird</td>
+//     <td>@twitter</td>
+//   </tr>
+// </tbody>
+// </table>
+
+// <table class="table">
+// <thead class="thead-light">
+//   <tr>
+//     <th scope="col">#</th>
+//     <th scope="col">First</th>
+//     <th scope="col">Last</th>
+//     <th scope="col">Handle</th>
+//   </tr>
+// </thead>
+// <tbody>
+//   <tr>
+//     <th scope="row">1</th>
+//     <td>Mark</td>
+//     <td>Otto</td>
+//     <td>@mdo</td>
+//   </tr>
+//   <tr>
+//     <th scope="row">2</th>
+//     <td>Jacob</td>
+//     <td>Thornton</td>
+//     <td>@fat</td>
+//   </tr>
+//   <tr>
+//     <th scope="row">3</th>
+//     <td>Larry</td>
+//     <td>the Bird</td>
+//     <td>@twitter</td>
+//   </tr>
+// </tbody>"; */}
+
+  $(".table").append(str);
 }
 
 // manage new social workers
