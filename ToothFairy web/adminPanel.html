@@ -128,7 +128,7 @@
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
 
-                    <div id = "welcome" onload="welcomeAdmin()"  dir="rtl">
+                    <div id = "welcome" dir="rtl">
                         <h3 dir="rtl">ברוכים הבאים לפאנל ניהול של העמותה</h3><br><br>
                         <h6 dir="rtl">כאן תוכלו:
                             <ul>
@@ -143,6 +143,8 @@
                     </div>
 
                     <div id = "img_manage">
+
+                            <h1><span class="turquoise"> ניהול גלריה</span></h1>
                             <div class="form-group">
                             
                             <input type="text" class="form-control-input" id="namebox" required>
@@ -163,26 +165,37 @@
                             <br>
                             <br>
                             <button id = "select" class="form-control-submit-button" onclick="getImagesToDelete()"> פתח גלריה למחיקה </button>
+                            <br>
+                            <br>
                             <div id="delete_imgs"></div>
                             
                     </div>
 
-                    <div id = "manageStories" >סיפורים אישיים
-                    
-                        <!-- <div class="form-group">
-                            
-                            <input type="text" class="form-control-input" id="namebox" required>
-                            <label class="label-control" for="cname">הכנס אות ראשונה של מספר הסיפור</label>
-                            <div class="help-block with-errors"></div>
+                    <div id = "manageStories" >
+                        <h1><span class="turquoise"> סיפורים אישיים</span></h1>
 
-                            <input type="text" class="form-control-input" id="namebox" required>
-                            <label class="label-control" for="cname">הכנס את הסיפור</label>
+                    
+                        <div class="form-group">
+                            <input type="text" class="form-control-input" id="headline" required>
+                            <label class="label-control" for="cname">הכנס כותרת</label>
                             <div class="help-block with-errors"></div>
-                            <img id="myimg"> <label id="UpProgress"></label> <br><br>
-                            </div> -->
-                    
-                    
-                    
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-control-textarea" id="story_msg" required></textarea>
+                            <label class="label-control" for="cmessage" dir="rtl">הכנס סיפור</label>
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <button id = "up_story" class="form-control-submit-button" onclick="up_story()"> הוסף סיפור </button>
+                        <br>
+                        <br>
+
+                        <button id = "select" class="form-control-submit-button" onclick="getStoriesToDelete()"> לחץ כאן על מנת לבחור סיפור למחיקה </button>
+                        <br>
+                        <br>
+                        <div id="delete_stories"></div>
+
                     </div>
 
                     <div id = "manage_appointments">
