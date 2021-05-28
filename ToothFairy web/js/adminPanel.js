@@ -13,11 +13,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-// onload = function init() {
-//   $("#manage_appointments").show();
-
-// }
-
 // *****************************
 
 // יש כבר הכנה לכל הפונקציות שצריכות להיות, לכתוב רק בתוך הדיבים והפונקציות שכבר הכנו !
@@ -37,10 +32,6 @@ function manageGallery() {
   $("#manageStories").hide();
   $("#manageSW").hide();
   $("#manage_appointments").hide();
-<<<<<<< HEAD
-  $("#welcome").hide();
-=======
->>>>>>> d686b3d075b7e248a94aef63b28ffbfce1883d7e
   $("#img_manage").show();
 }
 
@@ -355,6 +346,7 @@ function delete_story(storyName) {
     while (div.firstChild) {
       div.removeChild(div.firstChild);
     }
+    getStoriesToDelete()
   } else {
     return;
   }
