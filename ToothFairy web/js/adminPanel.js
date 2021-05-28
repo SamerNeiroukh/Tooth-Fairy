@@ -319,6 +319,7 @@ function getStoriesToDelete() {
   while (div.firstChild) {
     div.removeChild(div.firstChild);
   }
+  
   // run on all the data in the realtime database in filde Pictures
   let rootref = firebase.database().ref().child("Stories");
   rootref.on("child_added", (snap) => {
@@ -326,11 +327,11 @@ function getStoriesToDelete() {
     let story = snap.child("story_content").val();
 
     let str =
-      `<div> <button id="${title}"` +
+      `<div> <button class = "story_buttons" id="${title}"` +
       "onclick=delete_story('" +
       title +
       "')" +
-      `> <p dir="rtl" >כותרת הסיפור: ${title} </p> <p dir="rtl" >תוכן הסיפור: ${story} </p> </button></div>`;
+      `> <p dir="rtl"><h6 dir="rtl">כותרת הסיפור: ${title} </br></h6></p> <p dir="rtl"><b dir="rtl">תוכן הסיפור: </b><br> ${story} </p> </button></div>`;
 
     $("#delete_stories").append(str);
   });

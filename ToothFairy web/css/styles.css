@@ -2371,3 +2371,8 @@ a:hover.back-to-top {
 	padding-right: 50px;
 	border-radius: 50px;
 }
+
+.story_buttons{
+	background-color: #ffffff;
+	color: #ffffff;
+}
