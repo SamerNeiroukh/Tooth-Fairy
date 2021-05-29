@@ -63,14 +63,14 @@ document.getElementById("upload").onclick = function () {
     return;
   }
 
-  // get the image from the text box
+  // upload the image to the firebase storege
   ImgName = document.getElementById("namebox").value;
   let uploadTask = firebase
     .storage()
     .ref("Images/" + ImgName + ".png")
     .put(files[0]);
 
-  // upload the image to the firebase storege
+  // show % of upload
   uploadTask.on(
     "state_changed",
     function (snapshot) {
@@ -305,6 +305,7 @@ function up_story() {
       story_content: story,
     });
 
+  // test()
   alert("סיפור אישי עלה בהצלחה");
 
   // reset values of the textbox
@@ -339,6 +340,7 @@ function getStoriesToDelete() {
 
 // delete story from realtime database firebase
 function delete_story(storyName) {
+  alert(storyName)
   if (confirm("האם אתה בטוח שברצונך למחוק סיפור זה?")) {
     firebase.database().ref("Stories").child(storyName).remove();
 

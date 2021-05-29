@@ -18,7 +18,6 @@ $(document).ready(function () {
   x.style.display = "none";
 });
 
-
 function reg() {
   let userEmail = document.getElementById("remail").value;
   let secUserEmail = document.getElementById("secremail").value;
@@ -45,9 +44,8 @@ function reg() {
     .then(function (firebaseUser) {
       alert("משתמש כבר קיים");
 
-
-        var x = document.getElementById("user_exsist");
-        x.style.display = "block";
+      var x = document.getElementById("user_exsist");
+      x.style.display = "block";
       return;
     });
 
@@ -57,9 +55,19 @@ function reg() {
     .createUserWithEmailAndPassword(userEmail, userPass)
     .then((userCredential) => {
       // Signed in
-      var user = userCredential.user;
+      var user = userCredential.user.uid;
+
+      // add data of user to realtime firebase
+      firebase
+        .database()
+        .ref("Users/" + user)
+        .set({
+          user_uid: user,
+          User_email: userEmail,
+          Email_verification: userCredential.user.emailVerified
+        });
+
       alert("משתמש נוצר בהצלחה");
-      window.location.href = "index.html";
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -68,29 +76,33 @@ function reg() {
     });
 }
 
-function log()
-{
+// if user exsist and user press to move to login page
+function log() {
   window.location.href = "login.html";
 }
 
+// send Email Verification
+// function test(){
+//   var user = firebase.auth().currentUser;
 
+//   user.sendEmailVerification().then(function() {
+//     // Email sent.
+//   }).catch(function(error) {
+//     // An error happened.
+//   });
+// }
 
-
-
-
-
-//////////////////////////
-
+//--------- swipe images in gallary ---------//
 
 var slideIndex = 1;
 showSlides(slideIndex);
 
 function plusSlides(n) {
-  showSlides(slideIndex += n);
+  showSlides((slideIndex += n));
 }
 
 function currentSlide(n) {
-  showSlides(slideIndex = n);
+  showSlides((slideIndex = n));
 }
 
 function showSlides(n) {
@@ -98,18 +110,21 @@ function showSlides(n) {
   var slides = document.getElementsByClassName("mySlides");
   var dots = document.getElementsByClassName("demo");
   var captionText = document.getElementById("caption");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
+  if (n > slides.length) {
+    slideIndex = 1;
+  }
+  if (n < 1) {
+    slideIndex = slides.length;
+  }
   for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+    slides[i].style.display = "none";
   }
   for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
+    dots[i].className = dots[i].className.replace(" active", "");
   }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].className += " active";
+  captionText.innerHTML = dots[slideIndex - 1].alt;
 }
 
-
-
+//--------- end swipe images in gallary ---------//
