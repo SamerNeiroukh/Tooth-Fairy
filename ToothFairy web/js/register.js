@@ -56,7 +56,7 @@ function reg() {
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user.uid;
-
+      
       // add data of user to realtime firebase
       firebase
         .database()

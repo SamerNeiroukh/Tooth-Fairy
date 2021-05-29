@@ -13,14 +13,19 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-// *****************************
 
-// יש כבר הכנה לכל הפונקציות שצריכות להיות, לכתוב רק בתוך הדיבים והפונקציות שכבר הכנו !
+// var admin = require('firebase-admin');
+// var serviceAccount = require("path/to/serviceAccountKey.json");
 
-// ******************************
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://toothfairyweb-6be63-default-rtdb.firebaseio.com"
+// });
+
+
 
 $(document).ready(function () {
-  $("#manageSW").hide();
+  $("#manageAcounts").hide();
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#manage_appointments").hide();
@@ -30,7 +35,7 @@ $(document).ready(function () {
 function manageGallery() {
   $("#welcome").hide();
   $("#manageStories").hide();
-  $("#manageSW").hide();
+  $("#manageAcounts").hide();
   $("#manage_appointments").hide();
   $("#img_manage").show();
 }
@@ -115,11 +120,7 @@ function getImagesToDelete() {
     let imageName = snap.child("Name").val();
 
     let str =
-      `<div> <button id="${imageName}"` +
-      "onclick=deleteImg('" +
-      imageName +
-      "')" +
-      `> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`;
+      `<div> <button id="${imageName}" onclick="deleteImg('${imageName}')"> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`;
 
     $("#delete_imgs").append(str);
   });
@@ -154,113 +155,113 @@ function manageAppo() {
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#welcome").hide();
-  $("#manageSW").hide();
+  $("#manageAcounts").hide();
   $("#manage_appointments").show();
 
-  let str = "<thead class='thead-dark'>" + "<tr><th scope='col'>פרטים נוספים</th><th scope='col'>תאריך התור</th>";
-  str+= "<th scope='col'>שם המטופל</th><th scope='col'>מייל העוס/ית</th><th scope='col'>טלפון העוס/ית</th><th scope='col'>שם העוס/ית</th></tr></thead>";
+  let str =
+    "<thead class='thead-dark'>" +
+    "<tr><th scope='col'>פרטים נוספים</th><th scope='col'>תאריך התור</th>";
+  str +=
+    "<th scope='col'>שם המטופל</th><th scope='col'>מייל העוס/ית</th><th scope='col'>טלפון העוס/ית</th><th scope='col'>שם העוס/ית</th></tr></thead>";
 
+  //   var database = firebase.database().ref().child('toothfairyweb-6be63');
+  //   database.once('value', function(snapshot){
+  //       if(snapshot.exists()){
+  //           var content = '';
 
-//   var database = firebase.database().ref().child('toothfairyweb-6be63');
-//   database.once('value', function(snapshot){
-//       if(snapshot.exists()){
-//           var content = '';
+  //           snapshot.forEach(function(data){
+  //               var Email = data[snapshot].swname.val();
+  //               // var Name = data.val().Name;
+  //               // var Phone = data.val().Phone;
+  //               alert(Email);
+  //               // content += '<tr>';
+  //               // content += '<td>' + Email + '</td>'; //column1
+  //               // content += '<td>' + Name + '</td>';//column2
+  //               // content += '<td>' + Phone + '</td>';//column2
+  //               // content += '</tr>';
+  //   });
 
-//           snapshot.forEach(function(data){
-//               var Email = data[snapshot].swname.val();
-//               // var Name = data.val().Name;
-//               // var Phone = data.val().Phone;
-//               alert(Email);
-//               // content += '<tr>';
-//               // content += '<td>' + Email + '</td>'; //column1
-//               // content += '<td>' + Name + '</td>';//column2
-//               // content += '<td>' + Phone + '</td>';//column2
-//               // content += '</tr>';
-//   });
+  //   str+=content;
+  //     // $('#ex-table').append(content);
+  // }
+  // });
 
-//   str+=content;
-//     // $('#ex-table').append(content);
-// }
-// });
+  //   // let db = firebase.firestore();
+  //   // const admin =  require(firebase-admin);
+  //   // const db = admin.firestore();
 
+  //   // db.listCollections()
+  //   // .then(snapshot=>{
+  //   //     snapshot.forEach(snaps=>{
+  //   //         console.log("may");  // GET LIST OF ALL COLLECTIONS
+  //   //     })
+  //   // })
+  //   // .catch(error=>console.log(error));
+  //   //snaps["_queryOptions"].collectionId
+  //   // var docRef = db.collection().doc("SF");
 
-//   // let db = firebase.firestore();
-//   // const admin =  require(firebase-admin);
-//   // const db = admin.firestore();
-  
-//   // db.listCollections()
-//   // .then(snapshot=>{
-//   //     snapshot.forEach(snaps=>{
-//   //         console.log("may");  // GET LIST OF ALL COLLECTIONS
-//   //     })
-//   // })
-//   // .catch(error=>console.log(error));
-//   //snaps["_queryOptions"].collectionId
-//   // var docRef = db.collection().doc("SF");
+  //   // docRef.get().then((doc) => {
+  //   //     if (doc.exists) {
+  //   //         console.log("Document data:", doc.data());
+  //   //     } else {
+  //   //         // doc.data() will be undefined in this case
+  //   //         console.log("No such document!");
+  //   //     }
+  //   // }).catch((error) => {
+  //   //     console.log("Error getting document:", error);
+  //   // });
 
-//   // docRef.get().then((doc) => {
-//   //     if (doc.exists) {
-//   //         console.log("Document data:", doc.data());
-//   //     } else {
-//   //         // doc.data() will be undefined in this case
-//   //         console.log("No such document!");
-//   //     }
-//   // }).catch((error) => {
-//   //     console.log("Error getting document:", error);
-//   // });
+  //   {/* <tbody>
+  //   <tr>
+  //     <th scope="row">1</th>
+  //     <td>Mark</td>
+  //     <td>Otto</td>
+  //     <td>@mdo</td>
+  //   </tr>
+  //   <tr>
+  //     <th scope="row">2</th>
+  //     <td>Jacob</td>
+  //     <td>Thornton</td>
+  //     <td>@fat</td>
+  //   </tr>
+  //   <tr>
+  //     <th scope="row">3</th>
+  //     <td>Larry</td>
+  //     <td>the Bird</td>
+  //     <td>@twitter</td>
+  //   </tr>
+  // </tbody>
+  // </table>
 
-
-//   {/* <tbody>
-//   <tr>
-//     <th scope="row">1</th>
-//     <td>Mark</td>
-//     <td>Otto</td>
-//     <td>@mdo</td>
-//   </tr>
-//   <tr>
-//     <th scope="row">2</th>
-//     <td>Jacob</td>
-//     <td>Thornton</td>
-//     <td>@fat</td>
-//   </tr>
-//   <tr>
-//     <th scope="row">3</th>
-//     <td>Larry</td>
-//     <td>the Bird</td>
-//     <td>@twitter</td>
-//   </tr>
-// </tbody>
-// </table>
-
-// <table class="table">
-// <thead class="thead-light">
-//   <tr>
-//     <th scope="col">#</th>
-//     <th scope="col">First</th>
-//     <th scope="col">Last</th>
-//     <th scope="col">Handle</th>
-//   </tr>
-// </thead>
-// <tbody>
-//   <tr>
-//     <th scope="row">1</th>
-//     <td>Mark</td>
-//     <td>Otto</td>
-//     <td>@mdo</td>
-//   </tr>
-//   <tr>
-//     <th scope="row">2</th>
-//     <td>Jacob</td>
-//     <td>Thornton</td>
-//     <td>@fat</td>
-//   </tr>
-//   <tr>
-//     <th scope="row">3</th>
-//     <td>Larry</td>
-//     <td>the Bird</td>
-//     <td>@twitter</td>
-//   </tr>
-// </tbody>"; */}
+  // <table class="table">
+  // <thead class="thead-light">
+  //   <tr>
+  //     <th scope="col">#</th>
+  //     <th scope="col">First</th>
+  //     <th scope="col">Last</th>
+  //     <th scope="col">Handle</th>
+  //   </tr>
+  // </thead>
+  // <tbody>
+  //   <tr>
+  //     <th scope="row">1</th>
+  //     <td>Mark</td>
+  //     <td>Otto</td>
+  //     <td>@mdo</td>
+  //   </tr>
+  //   <tr>
+  //     <th scope="row">2</th>
+  //     <td>Jacob</td>
+  //     <td>Thornton</td>
+  //     <td>@fat</td>
+  //   </tr>
+  //   <tr>
+  //     <th scope="row">3</th>
+  //     <td>Larry</td>
+  //     <td>the Bird</td>
+  //     <td>@twitter</td>
+  //   </tr>
+  // </tbody>"; */}
 
   $(".table").append(str);
 }
@@ -271,13 +272,13 @@ function manageSocialWorkers() {
   $("#manageStories").hide();
   $("#welcome").hide();
   $("#manage_appointments").hide();
-  $("#manageSW").show();
+  $("#manageAcounts").show();
 }
 
 // manage personal stories
 function managePersonalStories() {
   $("#img_manage").hide();
-  $("#manageSW").hide();
+  $("#manageAcounts").hide();
   $("#welcome").hide();
   $("#manage_appointments").hide();
   $("#manageStories").show();
@@ -320,7 +321,7 @@ function getStoriesToDelete() {
   while (div.firstChild) {
     div.removeChild(div.firstChild);
   }
-  
+
   // run on all the data in the realtime database in filde Pictures
   let rootref = firebase.database().ref().child("Stories");
   rootref.on("child_added", (snap) => {
@@ -328,11 +329,8 @@ function getStoriesToDelete() {
     let story = snap.child("story_content").val();
 
     let str =
-      `<div> <button class = "story_buttons" id="${title}"` +
-      "onclick=delete_story('" +
-      title +
-      "')" +
-      `> <p dir="rtl"><h6 dir="rtl">כותרת הסיפור: ${title} </br></h6></p> <p dir="rtl"><b dir="rtl">תוכן הסיפור: </b><br> ${story} </p> </button></div>`;
+      `<div> <button class = "story_buttons" id="${title}"
+      onclick="delete_story('${title}')"> <p dir="rtl"><h6 dir="rtl">כותרת הסיפור: ${title} </br></h6></p> <p dir="rtl"><b dir="rtl">תוכן הסיפור: </b><br> ${story} </p> </button></div>`;
 
     $("#delete_stories").append(str);
   });
@@ -340,7 +338,7 @@ function getStoriesToDelete() {
 
 // delete story from realtime database firebase
 function delete_story(storyName) {
-  alert(storyName)
+  alert(storyName);
   if (confirm("האם אתה בטוח שברצונך למחוק סיפור זה?")) {
     firebase.database().ref("Stories").child(storyName).remove();
 
@@ -349,11 +347,93 @@ function delete_story(storyName) {
     while (div.firstChild) {
       div.removeChild(div.firstChild);
     }
-    getStoriesToDelete()
+    getStoriesToDelete();
   } else {
     return;
   }
 }
+
+// get all Stories from the firebase and show the admin the Stories to delete
+function get_all_users() {
+  // reset div
+  let div = document.getElementById("get_all_users");
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+
+  let str;
+
+  // run on all the data in the realtime database in filde Pictures
+  let rootref = firebase.database().ref().child("Users");
+
+  rootref.on("child_added", (snap) => {
+    let verification = snap.child("Email_verification").val();
+    let UserEmail = snap.child("User_email").val();
+    let userUid = snap.child("user_uid").val();
+
+    if (verification == true) {
+      verification = "חשבון מאושר";
+    } else if (verification == false) {
+      verification = "חשבון לא מאושר";
+    }
+
+    let table = `<table dir="rtl">
+    <tr>
+    <th align="center">מייל המשתמש</th>
+    <th>חשבון מואשר\ לא מואשר</th>
+    <th>אשר חשבון</th>
+    <th>מחק חשבון</th>
+    </tr>`;
+
+    let str =
+      `<tr>
+    <th align="center">${UserEmail}</th>
+    <th>${verification}</th>
+    <th><button class = "" ` +
+      "onclick=verification_user('" +
+      UserEmail +
+      "')" +
+      `> לחץ כאן כדי לשלוח מייל לאישור
+    </th>
+    <th> <button class = "" ` +
+      "onclick=delete_user('" +
+      userUid +
+      "')" +
+      `> לחץ כאן למחיקת חשבון</th>
+    </tr>`;
+
+    $("#get_all_users").append(table + str);
+  });
+}
+
+function delete_user(userUid) {
+    alert("userUid: " + userUid);
+    admin
+    .auth()
+    .deleteUser(uid)
+    .then(() => {
+      console.log('Successfully deleted user');
+    })
+    .catch((error) => {
+      console.log('Error deleting user:', error);
+    });
+  }
+  
+  function verification_user(UserEmail) {
+    alert("verification_user");
+  
+    // send Email Verification
+    var user = firebase.auth().currentUser;
+  
+    UserEmail.sendEmailVerification()
+      .then(function () {
+        // Email sent.
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+  }
+
 
 // logout admin
 function logout() {

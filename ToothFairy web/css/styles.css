@@ -2376,3 +2376,7 @@ a:hover.back-to-top {
 	background-color: #ffffff;
 	color: #ffffff;
 }
+
+table, th, td {
+	border: 1px solid black;
+  }
