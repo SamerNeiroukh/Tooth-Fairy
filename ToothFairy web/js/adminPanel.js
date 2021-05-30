@@ -26,6 +26,7 @@ $(document).ready(function () {
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#manage_appointments").hide();
+  $("#hide_div").show();
   $("#welcome").show();
 });
 
@@ -34,6 +35,7 @@ function manageGallery() {
   $("#manageStories").hide();
   $("#manageAcounts").hide();
   $("#manage_appointments").hide();
+  $("#hide_div").show();
   $("#img_manage").show();
 }
 
@@ -152,6 +154,7 @@ function manageAppo() {
   $("#manageStories").hide();
   $("#welcome").hide();
   $("#manageAcounts").hide();
+  $("#hide_div").hide();
   $("#manage_appointments").show();
 
   rest_apointmant_div()
@@ -164,6 +167,7 @@ function manageAccounts() {
   $("#manageStories").hide();
   $("#welcome").hide();
   $("#manage_appointments").hide();
+  $("#hide_div").show();
   $("#manageAcounts").show();
 
   rest_users_div();
@@ -333,6 +337,10 @@ function get_all_apointamnts() {
   <th> <h6> טלפון העו"ס </h6> </th>
   <th> <h6> תאריך </h6> </th>
   <th> <h6> הודעה </h6> </th>
+  <th> <h6> מחיקת פגישה </h6> </th>
+  <th> <h6> אישור פגישה </h6> </th>
+
+
   </tr>`;
 
   $("#apointmants_table").append(table);
@@ -356,12 +364,18 @@ function get_all_apointamnts() {
       <th>${worker_phone}</th>
       <th>${date}</th>
       <th>${msg}</th>
+      
 
       <th><button class = ""
         onclick="delete_apointmant('${apointmant_uid}')"
-        > לחץ כאן כדי לאשר חשבון
+        > לחץ כאן כדי למחוק תור
       </th>
-      </tr>`;
+      </tr>
+      <th><button class = ""
+      onclick="approve_apointmant('${apointmant_uid}')"
+      > לחץ כאן כדי לאשר תור
+    </th>
+    </tr>`;
 
       $("#apointmants_table").append(str);
   });
@@ -372,6 +386,23 @@ function rest_apointmant_div() {
   let div = document.getElementById("apointmants_table");
   while (div.firstChild) {
     div.removeChild(div.firstChild);
+  }
+}
+
+function delete_apointmant(apointmant_uid)
+{
+  if (confirm("האם אתה בטוח שברצונך למחוק תור זה?")) {
+    firebase.database().ref("Apointamnts").child(apointmant_uid).remove();
+
+    // reset div
+    let div = document.getElementById("apointmants_table");
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
+
+    get_all_apointamnts();
+  } else {
+    return;
   }
 }
 
