@@ -38,9 +38,7 @@ function login() {
         document.getElementById("lpass").value = "";
         alert("למשתמש זה אין הרשאות");
         return;
-      } 
-
-      else {
+      } else {
         firebase.auth().signup;
 
         if (userEmail == "my.tooth.fairy0@gmail.com") {
@@ -53,7 +51,6 @@ function login() {
           $("#logOutButton").show();
           $("#forgotpass").hide();
           $("#Log").hide();
-          addAppointment();
           document.getElementById("lemail").value = "";
           document.getElementById("lpass").value = "";
         }
@@ -94,7 +91,6 @@ function login() {
 
 // return user permission by uid
 function check_User_permission(uid) {
-  
   var starCountRef = firebase
     .database()
     .ref("Users/" + uid + "/User_permission");
@@ -135,42 +131,40 @@ function logout() {
 
 // add appointamt to fire store of social workers
 function addAppointment() {
-  let db = firebase.firestore();
-
-  // create a collction of social worker by his email
-  db.collection(firebase.auth().currentUser.email).add;
-
-  // create an apointmant with the filds un thr html
-  db.collection(firebase.auth().currentUser.email)
-    .doc()
-    .set({
+  // create apointmant in firebase realtime database
+  let storageRef = firebase
+    .database()
+    .ref("Apointamnts/")
+    .push({
       swname: $("#swname").val(),
       pname: $("#pname").val(),
       swemail: $("#swemail").val(),
       swphone: $("#swphone").val(),
       cmessage: $("#cmessage").val(),
       bookdate: $("#bookdate").val(),
+      apointmant_id: "temp",
+      // apointmant_id: getRoot().getParent()
     })
-    // case of succsess to upload the data
-    .then((docRef) => {
-      // delete all the filds in the form in the html
-      $("#swname").val("")
-      $("#pname").val("")
-      $("#swemail").val("")
-      $("#swphone").val("")
-      $("#cmessage").val("")
-      $("#bookdate").val("")
-    })
-    // case of unsuccsess to upload the data
-    .catch((error) => {
-      alert("Error adding document: ", error);
+    .then((data) => {
+      // add the apointmant id
+      let updates = {};
+      updates["Apointamnts/" + data.key + "/apointmant_id"] = data.key;
+      firebase.database().ref().update(updates);
 
+      $("#swname").val("");
+      $("#pname").val("");
+      $("#swemail").val("");
+      $("#swphone").val("");
+      $("#cmessage").val("");
+      $("#bookdate").val("");
+    })
+    .catch((error) => {
       // delete all the filds in the form in the html
-      document.getElementById("swname").value = "";
-      document.getElementById("pname").value = "";
-      document.getElementById("swemail").value = "";
-      document.getElementById("swphone").value = "";
-      document.getElementById("cmessage").value = "";
-      document.getElementById("bookdate").value = "";
+      $("#swname").val("");
+      $("#pname").val("");
+      $("#swemail").val("");
+      $("#swphone").val("");
+      $("#cmessage").val("");
+      $("#bookdate").val("");
     });
 }

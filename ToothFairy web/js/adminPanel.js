@@ -154,112 +154,8 @@ function manageAppo() {
   $("#manageAcounts").hide();
   $("#manage_appointments").show();
 
-  let str =
-    "<thead class='thead-dark'>" +
-    "<tr><th scope='col'>פרטים נוספים</th><th scope='col'>תאריך התור</th>";
-  str +=
-    "<th scope='col'>שם המטופל</th><th scope='col'>מייל העוס/ית</th><th scope='col'>טלפון העוס/ית</th><th scope='col'>שם העוס/ית</th></tr></thead>";
-
-  //   var database = firebase.database().ref().child('toothfairyweb-6be63');
-  //   database.once('value', function(snapshot){
-  //       if(snapshot.exists()){
-  //           var content = '';
-
-  //           snapshot.forEach(function(data){
-  //               var Email = data[snapshot].swname.val();
-  //               // var Name = data.val().Name;
-  //               // var Phone = data.val().Phone;
-  //               alert(Email);
-  //               // content += '<tr>';
-  //               // content += '<td>' + Email + '</td>'; //column1
-  //               // content += '<td>' + Name + '</td>';//column2
-  //               // content += '<td>' + Phone + '</td>';//column2
-  //               // content += '</tr>';
-  //   });
-
-  //   str+=content;
-  //     // $('#ex-table').append(content);
-  // }
-  // });
-
-  //   // let db = firebase.firestore();
-  //   // const admin =  require(firebase-admin);
-  //   // const db = admin.firestore();
-
-  //   // db.listCollections()
-  //   // .then(snapshot=>{
-  //   //     snapshot.forEach(snaps=>{
-  //   //         console.log("may");  // GET LIST OF ALL COLLECTIONS
-  //   //     })
-  //   // })
-  //   // .catch(error=>console.log(error));
-  //   //snaps["_queryOptions"].collectionId
-  //   // var docRef = db.collection().doc("SF");
-
-  //   // docRef.get().then((doc) => {
-  //   //     if (doc.exists) {
-  //   //         console.log("Document data:", doc.data());
-  //   //     } else {
-  //   //         // doc.data() will be undefined in this case
-  //   //         console.log("No such document!");
-  //   //     }
-  //   // }).catch((error) => {
-  //   //     console.log("Error getting document:", error);
-  //   // });
-
-  //   {/* <tbody>
-  //   <tr>
-  //     <th scope="row">1</th>
-  //     <td>Mark</td>
-  //     <td>Otto</td>
-  //     <td>@mdo</td>
-  //   </tr>
-  //   <tr>
-  //     <th scope="row">2</th>
-  //     <td>Jacob</td>
-  //     <td>Thornton</td>
-  //     <td>@fat</td>
-  //   </tr>
-  //   <tr>
-  //     <th scope="row">3</th>
-  //     <td>Larry</td>
-  //     <td>the Bird</td>
-  //     <td>@twitter</td>
-  //   </tr>
-  // </tbody>
-  // </table>
-
-  // <table class="table">
-  // <thead class="thead-light">
-  //   <tr>
-  //     <th scope="col">#</th>
-  //     <th scope="col">First</th>
-  //     <th scope="col">Last</th>
-  //     <th scope="col">Handle</th>
-  //   </tr>
-  // </thead>
-  // <tbody>
-  //   <tr>
-  //     <th scope="row">1</th>
-  //     <td>Mark</td>
-  //     <td>Otto</td>
-  //     <td>@mdo</td>
-  //   </tr>
-  //   <tr>
-  //     <th scope="row">2</th>
-  //     <td>Jacob</td>
-  //     <td>Thornton</td>
-  //     <td>@fat</td>
-  //   </tr>
-  //   <tr>
-  //     <th scope="row">3</th>
-  //     <td>Larry</td>
-  //     <td>the Bird</td>
-  //     <td>@twitter</td>
-  //   </tr>
-  // </tbody>"; */}
-
-  $(".table").append(str);
+  rest_apointmant_div()
+  get_all_apointamnts()
 }
 
 // manage new social workers
@@ -357,7 +253,7 @@ function rest_users_div() {
     div.removeChild(div.firstChild);
   }
 }
-// get all Stories from the firebase and show the admin the Stories to delete
+// get all users from the firebase
 function get_all_users() {
   let str;
 
@@ -414,6 +310,71 @@ function verification_user(user_uid) {
   get_all_users()
   return;
 }
+
+
+
+function rest_users_div() {
+  // reset div
+  let div = document.getElementById("get_all_users");
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+}
+
+// get all Stories from the firebase and show the admin the Stories to delete
+function get_all_apointamnts() {
+  let str;
+  
+  let table = `<table dir="rtl">
+  <tr>
+  <th> <h6> שם העו"ס </h6></th>
+  <th> <h6> שם המטופל </h6> </th>
+  <th> <h6> דואר אלקטרוני עו"ס </h6> </th>
+  <th> <h6> טלפון העו"ס </h6> </th>
+  <th> <h6> תאריך </h6> </th>
+  <th> <h6> הודעה </h6> </th>
+  </tr>`;
+
+  $("#apointmants_table").append(table);
+
+  // run on all the data in the realtime database in filde Pictures
+  let rootref = firebase.database().ref().child("Apointamnts");
+
+  rootref.on("child_added", (snap) => {
+    let worker_name = snap.child("swname").val();
+    let patient_name = snap.child("pname").val();
+    let worker_email = snap.child("swemail").val();
+    let worker_phone = snap.child("swphone").val();
+    let date = snap.child("bookdate").val();
+    let msg = snap.child("cmessage").val();
+    let apointmant_uid = snap.child("apointmant_id").val();
+
+      let str = ` <table dir="rtl"> <tr>
+      <th align="center">${worker_name}</th>
+      <th>${patient_name}</th>
+      <th>${worker_email}</th>
+      <th>${worker_phone}</th>
+      <th>${date}</th>
+      <th>${msg}</th>
+
+      <th><button class = ""
+        onclick="delete_apointmant('${apointmant_uid}')"
+        > לחץ כאן כדי לאשר חשבון
+      </th>
+      </tr>`;
+
+      $("#apointmants_table").append(str);
+  });
+}
+
+function rest_apointmant_div() {
+  // reset div
+  let div = document.getElementById("apointmants_table");
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+}
+
 
 // logout admin
 function logout() {

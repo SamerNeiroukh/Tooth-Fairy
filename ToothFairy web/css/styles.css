@@ -235,7 +235,7 @@ a.white {
 .label-control {
 	position: absolute;
 	top: 0.87rem;
-	left: 1.375rem;
+	right: 1.375rem;
 	color: #626262;
 	opacity: 1;
 	font: 400 0.875rem/1.375rem "Raleway", sans-serif;
@@ -274,6 +274,7 @@ a.white {
 	font: 400 0.875rem/1.875rem "Raleway", sans-serif;
 	transition: all 0.2s;
 	-webkit-appearance: none; /* removes inner shadow on form inputs on ios safari */
+	
 }
 
 .form-control-select {
