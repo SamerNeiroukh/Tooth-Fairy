@@ -17,52 +17,21 @@ function getImages() {
 
   rootref.on("child_added", (snap) => {
     let image = snap.child("Link").val();
+    let imageName = snap.child("Name").val();
     let str;
     //   alert("image: " + image)
-    str = `<div class="mySlides"> <img src= ${image} style="width:40%" style="height:40%"></img></div>`;
+    // str = `<div class="mySlides"> <img src= ${image} style="width:40%" style="height:40%"></img></div>`;
+
+
+    str = `  <div class="box">
+    <img src=${image} style="width:100%" style="height:100%">
+    <span>${imageName}</span>
+  </div>`
 
     $("#pictures").append(str);
     plusSlides(1);
   });
 }
-
-//------ make the gallary  ---------//
-var slideIndex = 1;
-showSlides(slideIndex);
-
-// Next/previous controls
-function plusSlides(n) {
-  showSlides((slideIndex += n));
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides((slideIndex = n));
-}
-
-// slide images
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  var captionText = document.getElementById("caption");
-  if (n > slides.length) {
-    slideIndex = 1;
-  }
-  if (n < 1) {
-    slideIndex = slides.length;
-  }
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].className += " active";
-  captionText.innerHTML = dots[slideIndex - 1].alt;
-}
-//------ end make the gallary  ---------//
 
 // get all Stories from the firebase and show the admin the Stories to delete
 function getStories() {
@@ -86,7 +55,7 @@ function getStories() {
     `;
     $(".swiper-wrapper").append(str);
 
-    /* Image Slider - Swiper */
+    /* Slider - Swiper */
     var imageSlider = new Swiper(".image-slider", {
       autoplay: {
         delay: 2000,
