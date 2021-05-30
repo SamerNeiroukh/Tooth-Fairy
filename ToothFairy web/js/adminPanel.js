@@ -13,7 +13,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-
 // import * as admin from 'firebase-admin';
 // const serviceAccount = require("path/to/serviceAccountKey.json");
 
@@ -21,8 +20,6 @@ firebase.analytics();
 //   credential: admin.credential.cert(serviceAccount),
 //   databaseURL: "https://toothfairyweb-6be63-default-rtdb.firebaseio.com"
 // });
-
-
 
 $(document).ready(function () {
   $("#manageAcounts").hide();
@@ -119,8 +116,7 @@ function getImagesToDelete() {
     let image = snap.child("Link").val();
     let imageName = snap.child("Name").val();
 
-    let str =
-      `<div> <button id="${imageName}" onclick="deleteImg('${imageName}')"> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`;
+    let str = `<div> <button id="${imageName}" onclick="deleteImg('${imageName}')"> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`;
 
     $("#delete_imgs").append(str);
   });
@@ -267,12 +263,15 @@ function manageAppo() {
 }
 
 // manage new social workers
-function manageSocialWorkers() {
+function manageAccounts() {
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#welcome").hide();
   $("#manage_appointments").hide();
   $("#manageAcounts").show();
+
+  rest_users_div();
+  get_all_users();
 }
 
 // manage personal stories
@@ -328,8 +327,7 @@ function getStoriesToDelete() {
     let title = snap.child("story_title").val();
     let story = snap.child("story_content").val();
 
-    let str =
-      `<div> <button class = "story_buttons" id="${title}"
+    let str = `<div> <button class = "story_buttons" id="${title}"
       onclick="delete_story('${title}')"> <p dir="rtl"><h6 dir="rtl">כותרת הסיפור: ${title} </br></h6></p> <p dir="rtl"><b dir="rtl">תוכן הסיפור: </b><br> ${story} </p> </button></div>`;
 
     $("#delete_stories").append(str);
@@ -352,78 +350,70 @@ function delete_story(storyName) {
   }
 }
 
-// get all Stories from the firebase and show the admin the Stories to delete
-function get_all_users() {
+function rest_users_div() {
   // reset div
   let div = document.getElementById("get_all_users");
   while (div.firstChild) {
     div.removeChild(div.firstChild);
   }
-
+}
+// get all Stories from the firebase and show the admin the Stories to delete
+function get_all_users() {
   let str;
 
   // run on all the data in the realtime database in filde Pictures
   let rootref = firebase.database().ref().child("Users");
+  
+  let table = `<table dir="rtl">
+  <tr>
+  <th align="center"><h6> מייל המשתמש </h6></th>
+  <th> <h6> חשבון מואשר\ לא מואשר </h6> </th>
+  <th> <h6> אשר חשבון </h6> </th>
+  </tr>`;
+  $("#get_all_users").append(table);
+
 
   rootref.on("child_added", (snap) => {
     let verification = snap.child("User_permission").val();
     let UserEmail = snap.child("User_email").val();
     let userUid = snap.child("user_uid").val();
 
-    if (verification == true) {
-      verification = "חשבון מאושר";
-    } else if (verification == false) {
+    if (verification == false) {
       verification = "חשבון לא מאושר";
+
+
+
+      let str = ` <table dir="rtl"> <tr>
+      <th align="center">${UserEmail}</th>
+      <th>${verification}</th>
+      <th><button class = ""
+        onclick="verification_user('${userUid}')"
+        > לחץ כאן כדי לאשר חשבון
+      </th>
+      </tr>`;
+
+      $("#get_all_users").append(str);
     }
-
-    let table = `<table dir="rtl">
-    <tr>
-    <th align="center">מייל המשתמש</th>
-    <th>חשבון מואשר\ לא מואשר</th>
-    <th>אשר חשבון</th>
-    <th>מחק חשבון</th>
-    </tr>`;
-
-    let str =
-      `<tr>
-    <th align="center">${UserEmail}</th>
-    <th>${verification}</th>
-    <th><button class = ""
-      onclick="verification_user('${userUid}')"
-      > לחץ כאן כדי לשלוח מייל לאישור
-    </th>
-    <th> <button class = ""
-      onclick="delete_user('${userUid}')" 
-      > לחץ כאן למחיקת חשבון</th>
-    </tr>`;
-
-    $("#get_all_users").append(table + str);
   });
 }
 
-// function delete_user(userUid) {
-//     alert("userUid: " + userUid);
-//     admin
-//     .auth()
-//     .deleteUser(userUid)
-//     .then(() => {
-//       alert('Successfully deleted user');
-//     })
-//     .catch((error) => {
-//       alert('Error deleting user:', error);
-//     });
-//   }
-  
-  function verification_user(user_uid) {
-    
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates['Users/' + user_uid + '/User_permission'] = true;
-    firebase.database().ref().update(updates);
-  
-    return 
-  }
+// update User permission to be true
+function verification_user(user_uid) {
+  let updates = {};
+  updates["Users/" + user_uid + "/User_permission"] = true;
+  firebase.database().ref().update(updates);
 
+
+  alert("חשבון אושר");
+
+  // reset div
+  let div = document.getElementById("get_all_users");
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+  get_all_users()
+  return;
+}
 
 // logout admin
 function logout() {

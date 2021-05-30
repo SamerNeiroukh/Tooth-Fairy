@@ -82,7 +82,7 @@
                     <a class="nav-link page-scroll" onclick="managePersonalStories()">ניהול סיפורים אישיים</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll"  onclick="manageSocialWorkers()">ניהול חשבונות משתמשים</a>
+                    <a class="nav-link page-scroll"  onclick="manageAccounts()">ניהול חשבונות משתמשים</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" onclick= "manageAppo()">ניהול תורים <span class="sr-only">(current)</span></a>
@@ -171,7 +171,7 @@
                             
                     </div>
 
-                    <div id = "manageStories" >
+                    <div id = "manageStories">
                         <h1><span class="turquoise"> סיפורים אישיים</span></h1>
 
                     
@@ -201,7 +201,7 @@
                     <div id = "manage_appointments">
                         <h4 dir="rtl">רשימת התורים:</h4>
                         <table class="table">
-                            
+
                         </table> 
                     </div>   
                     
@@ -209,11 +209,9 @@
 
                         <h1><span class="turquoise"> ניהול משתמשים</span></h1>
 
-                        <button id = "get_users" class="form-control-submit-button" onclick="get_all_users()"> קבל את כל המשתמשים </button>
-                        <br>
-                        <br>
-
-                        <div id="get_all_users" </div>
+                        
+                        <div id="get_all_users">
+                         </div>
 
                     </div>
 
@@ -228,7 +226,6 @@
         </div> <!-- end of header-content -->
     </header> <!-- end of header -->
     <!-- end of header -->
-
 
     <!-- Breadcrumbs -->
     <div class="ex-basic-1">
