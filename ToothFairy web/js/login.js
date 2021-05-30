@@ -142,6 +142,7 @@ function addAppointment() {
       swphone: $("#swphone").val(),
       cmessage: $("#cmessage").val(),
       bookdate: $("#bookdate").val(),
+      apintmant_aprov: false,
       apointmant_id: "temp",
       // apointmant_id: getRoot().getParent()
     })

@@ -26,7 +26,7 @@ $(document).ready(function () {
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#manage_appointments").hide();
-  $("#hide_div").show();
+  $("#text-container").show();
   $("#welcome").show();
 });
 
@@ -157,8 +157,8 @@ function manageAppo() {
   $("#hide_div").hide();
   $("#manage_appointments").show();
 
-  rest_apointmant_div()
-  get_all_apointamnts()
+  rest_apointmant_div();
+  get_all_apointamnts();
 }
 
 // manage new social workers
@@ -263,7 +263,7 @@ function get_all_users() {
 
   // run on all the data in the realtime database in filde Pictures
   let rootref = firebase.database().ref().child("Users");
-  
+
   let table = `<table dir="rtl">
   <tr>
   <th align="center"><h6> מייל המשתמש </h6></th>
@@ -272,7 +272,6 @@ function get_all_users() {
   </tr>`;
   $("#get_all_users").append(table);
 
-
   rootref.on("child_added", (snap) => {
     let verification = snap.child("User_permission").val();
     let UserEmail = snap.child("User_email").val();
@@ -280,8 +279,6 @@ function get_all_users() {
 
     if (verification == false) {
       verification = "חשבון לא מאושר";
-
-
 
       let str = ` <table dir="rtl"> <tr>
       <th align="center">${UserEmail}</th>
@@ -303,7 +300,6 @@ function verification_user(user_uid) {
   updates["Users/" + user_uid + "/User_permission"] = true;
   firebase.database().ref().update(updates);
 
-
   alert("חשבון אושר");
 
   // reset div
@@ -311,11 +307,9 @@ function verification_user(user_uid) {
   while (div.firstChild) {
     div.removeChild(div.firstChild);
   }
-  get_all_users()
+  get_all_users();
   return;
 }
-
-
 
 function rest_users_div() {
   // reset div
@@ -328,10 +322,13 @@ function rest_users_div() {
 // get all Stories from the firebase and show the admin the Stories to delete
 function get_all_apointamnts() {
   let str;
-  
+
+  // run on all the data in the realtime database in filde Pictures
+  let rootref = firebase.database().ref().child("Apointamnts");
+
   let table = `<table dir="rtl">
   <tr>
-  <th> <h6> שם העו"ס </h6></th>
+  <th align="center"> <h6> שם העו"ס </h6></th>
   <th> <h6> שם המטופל </h6> </th>
   <th> <h6> דואר אלקטרוני עו"ס </h6> </th>
   <th> <h6> טלפון העו"ס </h6> </th>
@@ -339,14 +336,9 @@ function get_all_apointamnts() {
   <th> <h6> הודעה </h6> </th>
   <th> <h6> מחיקת פגישה </h6> </th>
   <th> <h6> אישור פגישה </h6> </th>
-
-
   </tr>`;
 
   $("#apointmants_table").append(table);
-
-  // run on all the data in the realtime database in filde Pictures
-  let rootref = firebase.database().ref().child("Apointamnts");
 
   rootref.on("child_added", (snap) => {
     let worker_name = snap.child("swname").val();
@@ -357,27 +349,31 @@ function get_all_apointamnts() {
     let msg = snap.child("cmessage").val();
     let apointmant_uid = snap.child("apointmant_id").val();
 
-      let str = ` <table dir="rtl"> <tr>
-      <th align="center">${worker_name}</th>
-      <th>${patient_name}</th>
-      <th>${worker_email}</th>
-      <th>${worker_phone}</th>
-      <th>${date}</th>
-      <th>${msg}</th>
-      
+    str = `<table id="${apointmant_uid}" dir="rtl"> <tr>
+    <th align="center">${worker_name}</th>
+    <th>${patient_name}</th>
+    <th>${worker_email}</th>
+    <th>${worker_phone}</th>
+    <th>${date}</th>
+    <th>${msg}</th>
+    
 
-      <th><button class = ""
-        onclick="delete_apointmant('${apointmant_uid}')"
-        > לחץ כאן כדי למחוק תור
-      </th>
-      </tr>
-      <th><button class = ""
-      onclick="approve_apointmant('${apointmant_uid}')"
-      > לחץ כאן כדי לאשר תור
+    <th><button class = ""
+      onclick="delete_apointmant('${apointmant_uid}')"
+      > לחץ כאן כדי למחוק תור
+    </th>
+    </tr>
+    <th><button class = ""
+    onclick="approve_apointmant('${apointmant_uid}')"
+    > לחץ כאן כדי לאשר תור
     </th>
     </tr>`;
 
-      $("#apointmants_table").append(str);
+
+    $("#apointmants_table").append(str);
+
+    color_table(apointmant_uid)
+
   });
 }
 
@@ -389,8 +385,7 @@ function rest_apointmant_div() {
   }
 }
 
-function delete_apointmant(apointmant_uid)
-{
+function delete_apointmant(apointmant_uid) {
   if (confirm("האם אתה בטוח שברצונך למחוק תור זה?")) {
     firebase.database().ref("Apointamnts").child(apointmant_uid).remove();
 
@@ -406,6 +401,46 @@ function delete_apointmant(apointmant_uid)
   }
 }
 
+function approve_apointmant(apointmant_uid) {
+  let updates = {};
+  updates["Apointamnts/" + apointmant_uid + "/apintmant_aprov"] = true;
+  firebase.database().ref().update(updates);
+
+  alert("תור אושר");
+
+  // reset div
+  let div = document.getElementById("apointmants_table");
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+  get_all_apointamnts();
+  return;
+}
+
+
+async function color_table(apointmant_uid){
+
+  if ((await check_User_permission(apointmant_uid)) == true) {
+
+    let x = document.getElementById(apointmant_uid).getElementsByTagName("th");
+    for(let i = 0; i< x.length; i++)
+      x[i].style.backgroundColor = "rgb(86, 245, 126)";
+    return;
+  } 
+}
+
+// return user permission by uid
+function check_User_permission(uid) {
+  var starCountRef = firebase
+    .database()
+    .ref("Apointamnts/" + uid + "/apintmant_aprov");
+  return new Promise((rsolve, reject) => {
+    starCountRef.on("value", (snapshot) => {
+      // alert(snapshot.val())
+      rsolve(snapshot.val());
+    });
+  });
+}
 
 // logout admin
 function logout() {
