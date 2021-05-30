@@ -14,8 +14,8 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 
-// var admin = require('firebase-admin');
-// var serviceAccount = require("path/to/serviceAccountKey.json");
+// import * as admin from 'firebase-admin';
+// const serviceAccount = require("path/to/serviceAccountKey.json");
 
 // admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount),
@@ -338,7 +338,6 @@ function getStoriesToDelete() {
 
 // delete story from realtime database firebase
 function delete_story(storyName) {
-  alert(storyName);
   if (confirm("האם אתה בטוח שברצונך למחוק סיפור זה?")) {
     firebase.database().ref("Stories").child(storyName).remove();
 
@@ -367,7 +366,7 @@ function get_all_users() {
   let rootref = firebase.database().ref().child("Users");
 
   rootref.on("child_added", (snap) => {
-    let verification = snap.child("Email_verification").val();
+    let verification = snap.child("User_permission").val();
     let UserEmail = snap.child("User_email").val();
     let userUid = snap.child("user_uid").val();
 
@@ -389,49 +388,40 @@ function get_all_users() {
       `<tr>
     <th align="center">${UserEmail}</th>
     <th>${verification}</th>
-    <th><button class = "" ` +
-      "onclick=verification_user('" +
-      UserEmail +
-      "')" +
-      `> לחץ כאן כדי לשלוח מייל לאישור
+    <th><button class = ""
+      onclick="verification_user('${userUid}')"
+      > לחץ כאן כדי לשלוח מייל לאישור
     </th>
-    <th> <button class = "" ` +
-      "onclick=delete_user('" +
-      userUid +
-      "')" +
-      `> לחץ כאן למחיקת חשבון</th>
+    <th> <button class = ""
+      onclick="delete_user('${userUid}')" 
+      > לחץ כאן למחיקת חשבון</th>
     </tr>`;
 
     $("#get_all_users").append(table + str);
   });
 }
 
-function delete_user(userUid) {
-    alert("userUid: " + userUid);
-    admin
-    .auth()
-    .deleteUser(uid)
-    .then(() => {
-      console.log('Successfully deleted user');
-    })
-    .catch((error) => {
-      console.log('Error deleting user:', error);
-    });
-  }
+// function delete_user(userUid) {
+//     alert("userUid: " + userUid);
+//     admin
+//     .auth()
+//     .deleteUser(userUid)
+//     .then(() => {
+//       alert('Successfully deleted user');
+//     })
+//     .catch((error) => {
+//       alert('Error deleting user:', error);
+//     });
+//   }
   
-  function verification_user(UserEmail) {
-    alert("verification_user");
+  function verification_user(user_uid) {
+    
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['Users/' + user_uid + '/User_permission'] = true;
+    firebase.database().ref().update(updates);
   
-    // send Email Verification
-    var user = firebase.auth().currentUser;
-  
-    UserEmail.sendEmailVerification()
-      .then(function () {
-        // Email sent.
-      })
-      .catch(function (error) {
-        // An error happened.
-      });
+    return 
   }
 
 

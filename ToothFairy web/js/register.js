@@ -64,7 +64,7 @@ function reg() {
         .set({
           user_uid: user,
           User_email: userEmail,
-          Email_verification: userCredential.user.emailVerified
+          User_permission: userCredential.user.emailVerified
         });
 
       alert("משתמש נוצר בהצלחה");

@@ -30,24 +30,24 @@ function login() {
 
     // success to log in
     .then(function (firebaseUser) {
-      $("#booking").show();
-      $("#logOutButton").show();
-      $("#forgotpass").hide();
-      $("#Log").hide();
-
+      
+      check_User_permission(firebaseUser.user.uid)
+      
       firebase.auth().signup;
-      if(userEmail == "my.tooth.fairy0@gmail.com")
-      {
+      if (userEmail == "my.tooth.fairy0@gmail.com") {
         window.location.href = "adminPanel.html";
       }
 
       // delete the filds of login in the html
       else if ($("#booking").show() && $("#logOutButton").show()) {
-        addAppointment()
+        $("#booking").show();
+        $("#logOutButton").show();
+        $("#forgotpass").hide();
+        $("#Log").hide();
+        addAppointment();
         document.getElementById("lemail").value = "";
         document.getElementById("lpass").value = "";
       }
-
     })
 
     // not success to log in
@@ -64,7 +64,7 @@ function login() {
         errorMessage ===
         "There is no user record corresponding to this identifier. The user may have been deleted."
       ) {
-        alert("לא קיים משתמש זה במערכת")
+        alert("לא קיים משתמש זה במערכת");
         document.getElementById("lemail").value = "";
         document.getElementById("lpass").value = "";
         return;
@@ -81,6 +81,16 @@ function login() {
       // ...
     });
 }
+
+function check_User_permission(uid)
+{
+  var starCountRef = firebase.database().ref('Users/' + uid + '/User_permission');
+  starCountRef.on('value', (snapshot) => {
+    alert(snapshot.val())
+  });
+}
+
+
 
 // sent email to change password
 function forgotpass() {
@@ -114,8 +124,8 @@ function addAppointment() {
   let db = firebase.firestore();
 
   // create a collction of social worker by his email
-  db.collection(firebase.auth().currentUser.email).add
-  
+  db.collection(firebase.auth().currentUser.email).add;
+
   // create an apointmant with the filds un thr html
   db.collection(firebase.auth().currentUser.email)
     .doc()
@@ -129,7 +139,6 @@ function addAppointment() {
     })
     // case of succsess to upload the data
     .then((docRef) => {
-
       // delete all the filds in the form in the html
       document.getElementById("swname").value = "";
       document.getElementById("pname").value = "";
@@ -151,3 +160,5 @@ function addAppointment() {
       document.getElementById("bookdate").value = "";
     });
 }
+
+
