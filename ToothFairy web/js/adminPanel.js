@@ -359,13 +359,11 @@ function get_all_apointamnts() {
     
 
     <th><button class = ""
-      onclick="delete_apointmant('${apointmant_uid}')"
-      > לחץ כאן כדי למחוק תור
+      onclick="delete_apointmant('${apointmant_uid}')" > לחץ כאן כדי למחוק תור </button>
     </th>
-    </tr>
     <th><button class = ""
     onclick="approve_apointmant('${apointmant_uid}')"
-    > לחץ כאן כדי לאשר תור
+    > לחץ כאן כדי לאשר תור </button>
     </th>
     </tr>`;
 
@@ -401,6 +399,7 @@ function delete_apointmant(apointmant_uid) {
   }
 }
 
+// aprov apointmant in the realtime database firebase 
 function approve_apointmant(apointmant_uid) {
   let updates = {};
   updates["Apointamnts/" + apointmant_uid + "/apintmant_aprov"] = true;
@@ -418,6 +417,7 @@ function approve_apointmant(apointmant_uid) {
 }
 
 
+// paint the col that the admin aprove (of the apointmant)
 async function color_table(apointmant_uid){
 
   if ((await check_User_permission(apointmant_uid)) == true) {
