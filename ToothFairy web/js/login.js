@@ -142,9 +142,9 @@ function addAppointment() {
       swphone: $("#swphone").val(),
       cmessage: $("#cmessage").val(),
       bookdate: $("#bookdate").val(),
+      bookHour: $("#book_hour").val(),
       apintmant_aprov: false,
       apointmant_id: "temp",
-      // apointmant_id: getRoot().getParent()
     })
     .then((data) => {
       // add the apointmant id
@@ -158,6 +158,9 @@ function addAppointment() {
       $("#swphone").val("");
       $("#cmessage").val("");
       $("#bookdate").val("");
+      $("#book_hour").val(""),
+
+      alert("בקשתך נקלטה במערכת - אנא חכה לאישור או ביטול התור במייל")
     })
     .catch((error) => {
       // delete all the filds in the form in the html

@@ -13,14 +13,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-// import * as admin from 'firebase-admin';
-// const serviceAccount = require("path/to/serviceAccountKey.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://toothfairyweb-6be63-default-rtdb.firebaseio.com"
-// });
-
 $(document).ready(function () {
   $("#manageAcounts").hide();
   $("#img_manage").hide();
@@ -323,9 +315,6 @@ function rest_users_div() {
 function get_all_apointamnts() {
   let str;
 
-  // run on all the data in the realtime database in filde Pictures
-  let rootref = firebase.database().ref().child("Apointamnts");
-
   let table = `<table dir="rtl">
   <tr>
   <th align="center"> <h6> שם העו"ס </h6></th>
@@ -338,6 +327,9 @@ function get_all_apointamnts() {
   <th> <h6> אישור פגישה </h6> </th>
   </tr>`;
 
+  // run on all the data in the realtime database in filde Pictures
+  let rootref = firebase.database().ref().child("Apointamnts");
+
   $("#apointmants_table").append(table);
 
   rootref.on("child_added", (snap) => {
@@ -349,7 +341,7 @@ function get_all_apointamnts() {
     let msg = snap.child("cmessage").val();
     let apointmant_uid = snap.child("apointmant_id").val();
 
-    str = `<table id="${apointmant_uid}" dir="rtl"> <tr>
+    str = `<table id="${apointmant_uid}" dir="rtl"> 
     <th align="center">${worker_name}</th>
     <th>${patient_name}</th>
     <th>${worker_email}</th>
@@ -367,11 +359,9 @@ function get_all_apointamnts() {
     </th>
     </tr>`;
 
-
     $("#apointmants_table").append(str);
 
-    color_table(apointmant_uid)
-
+    color_table(apointmant_uid);
   });
 }
 
@@ -385,6 +375,42 @@ function rest_apointmant_div() {
 
 function delete_apointmant(apointmant_uid) {
   if (confirm("האם אתה בטוח שברצונך למחוק תור זה?")) {
+    let swemail;
+    let pname;
+    let date;
+    let hour;
+
+    firebase
+      .database()
+      .ref("Apointamnts/" + apointmant_uid + "/swemail")
+      .on("value", (snapshot) => {
+        swemail = snapshot.val();
+      });
+    firebase
+      .database()
+      .ref("Apointamnts/" + apointmant_uid + "/pname")
+      .on("value", (snapshot) => {
+        pname = snapshot.val();
+      });
+    firebase
+      .database()
+      .ref("Apointamnts/" + apointmant_uid + "/bookdate")
+      .on("value", (snapshot) => {
+        date = snapshot.val();
+      });
+    firebase
+      .database()
+      .ref("Apointamnts/" + apointmant_uid + "/bookHour")
+      .on("value", (snapshot) => {
+        hour = snapshot.val();
+      });
+
+    window.open(
+      `mailto:${swemail}?subject=ביטול התור של - ${pname} &body= התור שנקבע בתאריך: ${date} למטופל - ${pname} :בשעה ${hour}, בוטל. 
+      %0D%0A
+      נא לקבוע תור חדש.`
+    );
+
     firebase.database().ref("Apointamnts").child(apointmant_uid).remove();
 
     // reset div
@@ -399,13 +425,45 @@ function delete_apointmant(apointmant_uid) {
   }
 }
 
-// aprov apointmant in the realtime database firebase 
+// aprov apointmant in the realtime database firebase
 function approve_apointmant(apointmant_uid) {
   let updates = {};
   updates["Apointamnts/" + apointmant_uid + "/apintmant_aprov"] = true;
   firebase.database().ref().update(updates);
 
-  alert("תור אושר");
+  let swemail;
+  let pname;
+  let date;
+  let hour;
+
+  firebase
+    .database()
+    .ref("Apointamnts/" + apointmant_uid + "/swemail")
+    .on("value", (snapshot) => {
+      swemail = snapshot.val();
+    });
+  firebase
+    .database()
+    .ref("Apointamnts/" + apointmant_uid + "/pname")
+    .on("value", (snapshot) => {
+      pname = snapshot.val();
+    });
+  firebase
+    .database()
+    .ref("Apointamnts/" + apointmant_uid + "/bookdate")
+    .on("value", (snapshot) => {
+      date = snapshot.val();
+    });
+    firebase
+    .database()
+    .ref("Apointamnts/" + apointmant_uid + "/bookHour")
+    .on("value", (snapshot) => {
+      hour = snapshot.val();
+    });
+
+  window.open(
+    `mailto:${swemail}?subject=אישור התור של - ${pname} &body= התור שנקבע בתאריך: ${date} למטופל - ${pname} בשעה: ${hour}, אושר. `
+  );
 
   // reset div
   let div = document.getElementById("apointmants_table");
@@ -416,17 +474,14 @@ function approve_apointmant(apointmant_uid) {
   return;
 }
 
-
 // paint the col that the admin aprove (of the apointmant)
-async function color_table(apointmant_uid){
-
+async function color_table(apointmant_uid) {
   if ((await check_User_permission(apointmant_uid)) == true) {
-
     let x = document.getElementById(apointmant_uid).getElementsByTagName("th");
-    for(let i = 0; i< x.length; i++)
+    for (let i = 0; i < x.length; i++)
       x[i].style.backgroundColor = "rgb(86, 245, 126)";
     return;
-  } 
+  }
 }
 
 // return user permission by uid
