@@ -36,7 +36,7 @@ function login() {
       if ((await check_User_permission(firebaseUser.user.uid)) == false) {
         document.getElementById("lemail").value = "";
         document.getElementById("lpass").value = "";
-        alert("למשתמש זה אין הרשאות");
+        alert("מנהל עדיין לא אישר משתמש זה ");
         return;
       } else {
         firebase.auth().signup;
