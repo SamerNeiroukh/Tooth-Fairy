@@ -18,6 +18,7 @@ $(document).ready(function () {
   $("#img_manage").hide();
   $("#manageStories").hide();
   $("#manage_appointments").hide();
+  $("#herf_to_apointmants").hide();
   $("#text-container").show();
   $("#welcome").show();
 });
@@ -27,8 +28,48 @@ function manageGallery() {
   $("#manageStories").hide();
   $("#manageAcounts").hide();
   $("#manage_appointments").hide();
+  $("#herf_to_apointmants").hide();
   $("#hide_div").show();
   $("#img_manage").show();
+}
+
+// manage appointments
+function manageAppo() {
+  $("#img_manage").hide();
+  $("#manageStories").hide();
+  $("#welcome").hide();
+  $("#manageAcounts").hide();
+  $("#hide_div").hide();
+  $("#manage_appointments").show();
+  $("#herf_to_apointmants").show();
+
+
+  rest_apointmant_div();
+  get_all_apointamnts();
+}
+
+// manage new social workers
+function manageAccounts() {
+  $("#img_manage").hide();
+  $("#manageStories").hide();
+  $("#welcome").hide();
+  $("#manage_appointments").hide();
+  $("#herf_to_apointmants").hide();
+  $("#hide_div").show();
+  $("#manageAcounts").show();
+
+  rest_users_div();
+  get_all_users();
+}
+
+// manage personal stories
+function managePersonalStories() {
+  $("#img_manage").hide();
+  $("#manageAcounts").hide();
+  $("#welcome").hide();
+  $("#manage_appointments").hide();
+  $("#herf_to_apointmants").hide();
+  $("#manageStories").show();
 }
 
 let ImgName, ImgUrl;
@@ -110,7 +151,7 @@ function getImagesToDelete() {
     let image = snap.child("Link").val();
     let imageName = snap.child("Name").val();
 
-    let str = `<div> <button id="${imageName}" onclick="deleteImg('${imageName}')"> <img src= ${image} style="width:100px" style="height:100px"></img> </button></div>`;
+    let str = `<div> <button id="${imageName}" onclick="deleteImg('${imageName}')"> <img src= ${image} style="width:150px" style="height:150px"></img> </button></div>`;
 
     $("#delete_imgs").append(str);
   });
@@ -138,41 +179,6 @@ function deleteImg(imageName) {
   } else {
     return;
   }
-}
-
-// manage appointments
-function manageAppo() {
-  $("#img_manage").hide();
-  $("#manageStories").hide();
-  $("#welcome").hide();
-  $("#manageAcounts").hide();
-  $("#hide_div").hide();
-  $("#manage_appointments").show();
-
-  rest_apointmant_div();
-  get_all_apointamnts();
-}
-
-// manage new social workers
-function manageAccounts() {
-  $("#img_manage").hide();
-  $("#manageStories").hide();
-  $("#welcome").hide();
-  $("#manage_appointments").hide();
-  $("#hide_div").show();
-  $("#manageAcounts").show();
-
-  rest_users_div();
-  get_all_users();
-}
-
-// manage personal stories
-function managePersonalStories() {
-  $("#img_manage").hide();
-  $("#manageAcounts").hide();
-  $("#welcome").hide();
-  $("#manage_appointments").hide();
-  $("#manageStories").show();
 }
 
 // add story to realtime database firebase
@@ -259,7 +265,7 @@ function get_all_users() {
   let table = `<table dir="rtl">
   <tr>
   <th align="center"><h6> מייל המשתמש </h6></th>
-  <th> <h6> חשבון מואשר\ לא מואשר </h6> </th>
+  <th> <h6> חשבון מאושר\ לא מאושר </h6> </th>
   <th> <h6> אשר חשבון </h6> </th>
   </tr>`;
   $("#get_all_users").append(table);
@@ -341,7 +347,7 @@ function get_all_apointamnts() {
     let msg = snap.child("cmessage").val();
     let apointmant_uid = snap.child("apointmant_id").val();
 
-    str = `<table id="${apointmant_uid}" dir="rtl"> 
+    str = `<table dir="rtl"> 
     <th align="center">${worker_name}</th>
     <th>${patient_name}</th>
     <th>${worker_email}</th>
@@ -350,14 +356,12 @@ function get_all_apointamnts() {
     <th>${msg}</th>
     
 
-    <th><button class = ""
+    <th> <button
       onclick="delete_apointmant('${apointmant_uid}')" > לחץ כאן כדי למחוק תור </button>
     </th>
-    <th><button class = ""
-    onclick="approve_apointmant('${apointmant_uid}')"
-    > לחץ כאן כדי לאשר תור </button>
-    </th>
-    </tr>`;
+    <th> <button
+    onclick="approve_apointmant('${apointmant_uid}')" > לחץ כאן כדי לאשר תור </button>
+    </th>`;
 
     $("#apointmants_table").append(str);
 

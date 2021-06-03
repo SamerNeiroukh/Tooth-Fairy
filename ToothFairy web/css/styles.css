@@ -2415,7 +2415,7 @@ a:hover.back-to-top {
   table, th, td {
 	border: 1px solid rgb(0, 0, 0);
 	table-layout: fixed;
-	width: 100%;
+	width: 100%; 
 	text-align:center;
   }
    
