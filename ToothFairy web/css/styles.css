@@ -2420,6 +2420,8 @@ a:hover.back-to-top {
   }
 
 
+  /*Privacy policy */
+
   .modal {
 	display: none;
 	position: fixed;
@@ -2434,7 +2436,6 @@ a:hover.back-to-top {
 	padding-top: 60px;
 }
 
-/*style the model content box*/
 .modal-content {
 	background-color: rgb(255, 255, 255);
 	margin: 5% auto 15% auto;
@@ -2442,24 +2443,6 @@ a:hover.back-to-top {
 	width: 80%;
 }
 
-
-.PrivacyPolicy-button {
-	display: inline-block;
-	width: auto;
-	height: 3.125rem;
-	border: 1px solid #00bfd8;
-	border-radius: 1.5rem;
-	background-color: #00bfd8;
-	color: #fff;
-	font: 700 0.75rem/1.75rem "Raleway", sans-serif;
-	cursor: pointer;
-	transition: all 0.2s;
-	text-align: center;
-}
-
-.PrivacyPolicy-button:hover {
-	background-color: transparent;
-	color: #00bfd8;
-}
+/*End privacy policy*/
 
    
