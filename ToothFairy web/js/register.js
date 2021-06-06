@@ -85,6 +85,15 @@ function log() {
   window.location.href = "login.html";
 }
 
+
+// get Privacy Policy
+var modal = document.getElementById('PrivacyPolicy');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
 // send Email Verification
 // function test(){
 //   var user = firebase.auth().currentUser;

@@ -108,3 +108,11 @@ function getImagesAndStories() {
   getImages();
 }
 
+// get Privacy Policy
+var modal = document.getElementById('PrivacyPolicy');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
