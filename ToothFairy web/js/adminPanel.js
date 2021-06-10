@@ -357,10 +357,10 @@ function get_all_apointamnts() {
     
 
     <th> <button
-      onclick="delete_apointmant('${apointmant_uid}')" > לחץ כאן כדי למחוק תור </button>
+      onclick="delete_apointmant('${apointmant_uid}')" style="background-color: rgba(248, 82, 82)"> לחץ כאן כדי למחוק תור </button>
     </th>
     <th> <button
-    onclick="approve_apointmant('${apointmant_uid}')" > לחץ כאן כדי לאשר תור </button>
+    onclick="approve_apointmant('${apointmant_uid}')" style="background-color: rgb(86, 245, 126)"> לחץ כאן כדי לאשר תור </button>
     </th>`;
 
     $("#apointmants_table").append(str);
