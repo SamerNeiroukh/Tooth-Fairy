@@ -26,10 +26,9 @@ function getImages() {
     str = `  <div class="box">
     <img src=${image} style="width:100%" style="height:100%">
     <span>${imageName}</span>
-  </div>`
+    </div>`
 
     $("#pictures").append(str);
-    plusSlides(1);
   });
 }
 

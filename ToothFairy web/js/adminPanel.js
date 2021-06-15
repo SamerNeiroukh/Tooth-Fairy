@@ -14,6 +14,8 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 $(document).ready(function () {
+  // jQuery(".rfr-col-title").hide();
+  $('a[href*="adminPanel.html"]').hide();
   $("#manageAcounts").hide();
   $("#img_manage").hide();
   $("#manageStories").hide();
